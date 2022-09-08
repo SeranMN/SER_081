@@ -1,10 +1,12 @@
-import logo from './logo.svg';
+
 import './App.css';
-import Projects from './Components/projects/projects';
+import ProjectDes from './Components/projects/ProjectDes';
+import Routing from './Routing';
 function App() {
   return (
     <div className="App">
-      <Projects/>
+      <Routing/>
+      
     </div>
   );
 }

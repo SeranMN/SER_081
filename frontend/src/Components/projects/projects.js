@@ -1,7 +1,7 @@
 import { useState, useEffect, forwardRef, React } from "react";
 import axios from "axios";
 import Modal from "@mui/material/Modal";
-import { Link, TextareaAutosize, Typography } from "@mui/material";
+import { TextareaAutosize, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -16,6 +16,7 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
+import { Link } from "react-router-dom";
 
 const Projects = () => {
   const [open, setOpen] = useState(false);
@@ -74,7 +75,7 @@ const Projects = () => {
         setProjects(res.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [onSubmit]);
 
   const style = {
     position: "absolute",
@@ -120,8 +121,9 @@ const Projects = () => {
                     </Typography>
                   </CardContent>
                 <CardActions>
-                  <Link >
-                   <Button size="small">Learn More</Button></Link>
+                  <Link to = {`/projectsdes/${pro._id}`}>
+                    <Button size="small">Learn More</Button>
+                  </Link>
                    
                   </CardActions>
                 </Card>
@@ -170,8 +172,10 @@ const Projects = () => {
               required
               id="outlined-basic"
               placeholder="Description"
-              style={{ width: 400 }}
+              style={{ width: 400, maxHeight:400 }}
+              
               minRows={20}
+              maxRows ={40}
               value={description}
               onChange={(e) => {
                 setDescription(e.target.value);
