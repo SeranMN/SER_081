@@ -15,19 +15,19 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Grid from '@mui/material/Grid';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
 
 const EventList = ({ events }) => {
     return (
         <>
             <Grid container spacing={3}>
                 {events.map((event, index) => (
-                    <Grid item xs={12} md={8} lg={4}>
+                    <Grid sx={{ mt: 3}} item xs={12} md={8} lg={4} >
                         <Card sx={{ maxWidth: 360, mt: 4 }}>
                             <CardHeader
+                                sx={{textAlign:'left'}}
                                 action={
-                                    <IconButton aria-label="settings">
-                                        <MoreVertIcon />
-                                    </IconButton>
+                                    <Chip label="Pending approval" sx={{bgcolor: '#bdbdbd'}}/>
                                 }
                                 title={event.eventName}
                                 subheader={`${event.date} ${event.time}`} 

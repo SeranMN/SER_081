@@ -32,7 +32,7 @@ const EventScheduling = () => {
 
     return (
         <>
-            <Container sx={{ ml: 36 }}>
+            <Container sx={{ ml: 40 }}>
                 <SearchBar />
             </Container>
             <Container sx={{ mt: 4 }}>
