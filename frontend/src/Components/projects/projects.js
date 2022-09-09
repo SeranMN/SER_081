@@ -12,7 +12,7 @@ import Stack from "@mui/material/Stack";
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import Grid from "@mui/material/Grid";
-
+import CardMedia from "@mui/material/CardActions";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -109,12 +109,19 @@ const Projects = () => {
         position: "absolute",
         top:100
 }}>
+<Stack spacing={4}>
       <Grid container spacing={2}>
         {projects.map((pro) => (
           
             <Grid item>
-              <Box sx={{ maxWidth: 600, minHeight: 150 }}>
-                <Card>
+              <Box sx={{ maxWidth: 600, minHeight: 150, minWidth:600  }}>
+              <Card>
+                <CardContent
+                  component="img"
+                  src="/clublogo.png"
+                  height={"150"} 
+                  width={"150"}
+                />
                   <CardContent>
                     <Typography sx={{ fontSize: 25 }} gutterBottom>
                       {pro.name}
@@ -131,7 +138,8 @@ const Projects = () => {
             
           </Grid>
         ))}
-        </Grid>
+          </Grid>
+          </Stack>
         </div>
 
       <Modal
