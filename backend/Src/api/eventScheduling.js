@@ -16,7 +16,7 @@ router.post("/create", upload.single("file"), async (req, res) => {
 
         // Create new Event
         let eventSchedulingScheme = new EventSchedulingScheme({
-            name: req.body.name,
+            eventName: req.body.eventName,
             date: req.body.date,
             avatar: result.secure_url,
             cloudinary_id: result.public_id,
