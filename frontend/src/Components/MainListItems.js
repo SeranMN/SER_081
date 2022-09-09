@@ -11,6 +11,7 @@ import EventScheduling from './eventScheduling/EventScheduling';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import EventIcon from '@mui/icons-material/Event';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import Projects from './projects/projects';
 
 const MainListItems = ({setView,setHeader}) => {
     return (
@@ -24,7 +25,10 @@ const MainListItems = ({setView,setHeader}) => {
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => {
+                setHeader("Projects")
+                setView(<Projects/>)
+            }}>
                 <ListItemIcon>
                     <DriveFolderUploadIcon />
                 </ListItemIcon>
