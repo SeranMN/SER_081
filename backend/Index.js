@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require('cors');
 
+const BoardMembersApi = require("./Src/api/boardMembers-api");
+
 const bodyParser = require("body-parser");
 
 const connectDB = require("./src/config/config");
@@ -16,6 +18,8 @@ app.use(cors());
 //  app.use(express.json());
 
 connectDB();
+
+app.use("/boardMembers", BoardMembersApi());
 
 app.listen(PORT, () => {
   console.log(`App listening at http://localhost:${PORT}`);
