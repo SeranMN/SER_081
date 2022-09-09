@@ -22,9 +22,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import DatePicker from "react-datepicker"
 import axios from 'axios'
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
         padding: theme.spacing(2),
@@ -64,9 +68,10 @@ BootstrapDialogTitle.propTypes = {
 };
 
 
-const AddEvents = () => {
+const AddEvents = ({toggle,setToggle}) => {
 
     const [open, setOpen] = React.useState(false);
+    const [open1, setOpen1] = React.useState(false);
     const [value, setValue] = React.useState(dayjs('2022-09-09T21:11:54'));
     const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"]
     const today = new Date()
@@ -83,8 +88,29 @@ const AddEvents = () => {
         setOpen(false);
     };
 
+    const handleClose1 = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen1(false);
+    };
+
+    const handleClick = () => {
+        setOpen1(true);
+    };
+
     return (
         <>
+            <Snackbar open={open1} autoHideDuration={5000} onClose={handleClose1} anchorOrigin={{
+                vertical: "top",
+                horizontal: "center"
+            }}>
+
+                <Alert onClose={handleClose1} severity="success" sx={{ width: '100%' }}>
+                    "sucessfully Schedule the Event"
+                </Alert>
+            </Snackbar>
             <Button variant="contained" onClick={handleClickOpen} size="medium" startIcon={<EventIcon />}>
                 Schedule Event
             </Button>
@@ -121,18 +147,21 @@ const AddEvents = () => {
 
                     })}
                     onSubmit={(values, { setSubmitting }) => {
-                        console.log(values)
+                        if (values.time) {
+                            console.log(values.date)
+                        }
                         let formData = new FormData();
                         formData.append('file', values.photo)
                         formData.append('eventName', values.eventName)
-                        formData.append('date', values.date.$D + '/' + values.date.$M + '/' + values.date.$y)
-                        formData.append('time', values.time)
+                        formData.append('date', values.date.$D + '/' + 9 + '/' + values.date.$y)
+                        formData.append('time', '10:30 AM')
                         formData.append('fileName', values.photo.name)
                         formData.append('description', values.description)
 
                         axios.post("http://localhost:5000/eventScheduling/create", formData).then((res) => {
-                            alert('submiited sucessfully')
-
+                            setToggle(!toggle)
+                            handleClick()
+                            setOpen(false);
                         }).catch((err) => {
                             console.log(err)
                         })
@@ -164,20 +193,13 @@ const AddEvents = () => {
                                 </ErrorMessage>
                                 <Stack direction="row" spacing={8} alignItems='center' mt={4}>
                                     <FormLabel sx={{ color: "black", minWidth: '105px' }}>Time* :</FormLabel>
-                                    <TextField
-                                        id="time"
-                                        type="time"
-                                        name='time'
-                                        onChange={value => props.setFieldValue("time", value)}
-                                        defaultValue="07:30"
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                        inputProps={{
-                                            step: 300, // 5 min
-                                        }}
-                                        sx={{ width: 150 }}
-                                    />
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <TimePicker
+                                            value={props.values.time}
+                                            onChange={value => props.setFieldValue("time", value)}
+                                            renderInput={(params) => <TextField {...params} />}
+                                        />
+                                    </LocalizationProvider>
                                 </Stack>
                                 <ErrorMessage name="time">
                                     {msg => <div style={{ color: 'red' }} className="film-details-input-validation">{msg}</div>}
@@ -185,6 +207,7 @@ const AddEvents = () => {
                                 <Stack direction="row" spacing={7} alignItems='center' mt={4}>
                                     <FormLabel sx={{ color: "black", minWidth: '105px' }}>Upload Photo* :</FormLabel>
                                     <input id="file" name="file" type="file" onChange={(e) => props.setFieldValue("photo", e.currentTarget.files[0])} />
+
                                 </Stack>
                                 <ErrorMessage name="photo">
                                     {msg => <div style={{ color: 'red' }} className="film-details-input-validation">{msg}</div>}

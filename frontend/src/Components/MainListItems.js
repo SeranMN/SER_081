@@ -4,13 +4,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import AdminHome from './AdminHome';
 import EventScheduling from './eventScheduling/EventScheduling';
+import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
+import EventIcon from '@mui/icons-material/Event';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 
 const MainListItems = ({setView,setHeader}) => {
     return (
@@ -26,7 +26,7 @@ const MainListItems = ({setView,setHeader}) => {
             </ListItemButton>
             <ListItemButton>
                 <ListItemIcon>
-                    <ShoppingCartIcon />
+                    <DriveFolderUploadIcon />
                 </ListItemIcon>
                 <ListItemText primary="Projects" />
             </ListItemButton>
@@ -38,7 +38,7 @@ const MainListItems = ({setView,setHeader}) => {
             </ListItemButton>
             <ListItemButton>
                 <ListItemIcon>
-                    <BarChartIcon />
+                    <LibraryBooksIcon />
                 </ListItemIcon>
                 <ListItemText primary="Blogs" />
             </ListItemButton>
@@ -47,7 +47,7 @@ const MainListItems = ({setView,setHeader}) => {
                 setView(<EventScheduling/>)
             }}>
                 <ListItemIcon>
-                    <LayersIcon />
+                    <EventIcon />
                 </ListItemIcon>
                 <ListItemText primary="Events" />
             </ListItemButton>
