@@ -12,11 +12,12 @@ import Stack from "@mui/material/Stack";
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import Grid from "@mui/material/Grid";
-import CardMedia from "@mui/material/CardActions";
+import Container from '@mui/material/Container';
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import { Link } from "react-router-dom";
+
 
 const Projects = () => {
   const [open, setOpen] = useState(false);
@@ -82,7 +83,7 @@ const Projects = () => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
+    width: 450,
     bgcolor: "background.paper",
 
     boxShadow: 24,
@@ -90,29 +91,32 @@ const Projects = () => {
   };
   return (
     <>
-      <Button
-        onClick={handleOpen}
-        variant="contained"
-        color="success"
-        style={{
-          position: "relative",
-          left: 600,
-          top: 10,
-          width: 200,
-          height: 50,
-          fontSize: 20,
-        }}
-      >
-        Add Projects
-      </Button>
-      <div style={{
+        <Button
+          onClick={handleOpen}
+          variant="contained"
+          color="success"
+          style={{
+            left: 500,
+            top: 10,
+            width: 200,
+            height: 50,
+            fontSize: 20,
+          }}
+        >
+          Add Projects
+        </Button>
+
+
+      <div div style={{
         position: "absolute",
-        top:100
-}}>
-<Stack spacing={4}>
+        top: 100,
+        marginTop:100
+      }
+      }>
+  <Stack spacing={4}>
       <Grid container spacing={2}>
-        {projects.map((pro) => (
-          
+          {projects.map((pro) => (
+
             <Grid item>
               <Box sx={{ maxWidth: 600, minHeight: 150, minWidth:600  }}>
               <Card>
@@ -123,15 +127,15 @@ const Projects = () => {
                   width={"150"}
                 />
                   <CardContent>
-                    <Typography sx={{ fontSize: 25 }} gutterBottom>
+                    <Typography sx={{ fontSize: 18 }} gutterBottom>
                       {pro.name}
                     </Typography>
                   </CardContent>
-                <CardActions>
-                  <Link to = {`/projectsdes/${pro._id}`}>
-                    <Button size="small">Learn More</Button>
-                  </Link>
-                   
+                  <CardActions>
+                    <Link to={`/projectsdes/${pro._id}`}>
+                      <Button size="small">Learn More</Button>
+                    </Link>
+
                   </CardActions>
                 </Card>
               </Box>
@@ -180,21 +184,21 @@ const Projects = () => {
               required
               id="outlined-basic"
               placeholder="Description"
-              style={{ width: 400, maxHeight:400 }}
-              
+              style={{ width: 400, maxHeight: 400 }}
+
               minRows={20}
-              maxRows ={40}
+              maxRows={40}
               value={description}
               onChange={(e) => {
                 setDescription(e.target.value);
               }}
             />
             {projectName === "" ||
-            date === "" ||
-            description === "" ||
-            projectName === null ||
-            date === null ||
-            description === null ? (
+              date === "" ||
+              description === "" ||
+              projectName === null ||
+              date === null ||
+              description === null ? (
               <Button variant="contained" color="success" disabled="true">
                 Submit
               </Button>
