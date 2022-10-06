@@ -2,16 +2,13 @@ const mongoose = require("mongoose");
 
 const boardMembersSchema = new mongoose.Schema({
     boardMemberName: { 
-        type: String, 
-        required: true 
+        type: String
     },
     designation:{
-        type:String,
-        required: true  
+        type:String
     },
     description:{
-        type:String,
-        required: true  
+        type:String
     },
     avatar:{
         type: String
@@ -21,4 +18,4 @@ const boardMembersSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model("members",boardMembersSchema);
+module.exports = mongoose.model("boardMembers",boardMembersSchema);

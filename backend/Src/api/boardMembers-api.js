@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const cloudinary = require("../utils/cloudinary");
 const upload = require("../utils/multer");
-const BoardMembersScheme = require("../modal/boardMembers")
+const BoardMembersScheme = require("../modal/boardMembers-modal")
 
 router.post("/create", upload.single("file"), async (req, res) => {
     let fileName = req.body.fileName

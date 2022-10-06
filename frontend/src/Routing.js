@@ -13,7 +13,6 @@ const Routing = () => {
             <Routes>
                 <Route path='/adminDashboard' exact element={<Dashboard />} />
                 <Route path='/events' exact element={<EventScheduling />} />
-                
              </Routes>
         
         </BrowserRouter>
