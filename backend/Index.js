@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require('cors');
-
+const EventSchedulingAPI = require("./Src/api/eventScheduling")
 const BoardMembersApi = require("./Src/api/boardMembers-api");
 
 const bodyParser = require("body-parser");
@@ -18,6 +18,8 @@ app.use(cors());
 //  app.use(express.json());
 
 connectDB();
+
+app.use("/eventScheduling",EventSchedulingAPI)
 
 app.use("/boardMembers", BoardMembersApi());
 
