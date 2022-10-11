@@ -12,12 +12,11 @@ import Stack from "@mui/material/Stack";
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import Grid from "@mui/material/Grid";
-import Container from '@mui/material/Container';
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import { Link } from "react-router-dom";
-
+import {FormLabel} from "@mui/material";
 
 const Projects = () => {
   const [open, setOpen] = useState(false);
@@ -27,6 +26,7 @@ const Projects = () => {
   const [projectName, setProjectName] = useState();
   const [date, SetDate] = useState("");
   const [description, setDescription] = useState();
+  const [photo,setPhoto] = useState()
 
   const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -67,6 +67,9 @@ const Projects = () => {
     setOpen(false);
   };
 
+  const [Search, setSearch] = useState([])
+  const [sValue,setSvalue] = useState('')
+
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -78,6 +81,26 @@ const Projects = () => {
       .catch((err) => console.log(err));
   }, [onSubmit]);
 
+  const find = (value) => {
+    
+    
+    
+     
+      axios
+      .post("http://localhost:5000/project/search",{"Search":value})
+        .then((res) => {
+        console.log(res.data)
+          setSearch(res.data);
+          
+      })
+      .catch((err) => console.log(err));
+    
+    
+  }
+    
+  
+ 
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -85,18 +108,43 @@ const Projects = () => {
     transform: "translate(-50%, -50%)",
     width: 450,
     bgcolor: "background.paper",
-
     boxShadow: 24,
     p: 4,
   };
   return (
     <>
+      <div div style={{
+        position: "static",
+        top: 10,
+        marginTop:10
+      }
+      }>
+      <TextField id="outlined-basic" label="Search" variant="outlined" style={{ width: 400 }} 
+        value = {sValue}
+        onChange={(e) => {
+          setSvalue (e.target.value.toLowerCase())
+          
+          }} />
+        <Button
+          onClick={handleOpen}
+          variant="contained"
+          
+          style={{
+            left: 200,
+            top: 10,
+            width: 200,
+            height: 50,
+            fontSize: 20,
+          }}
+        >
+          Report
+        </Button>
         <Button
           onClick={handleOpen}
           variant="contained"
           color="success"
           style={{
-            left: 500,
+            left: 230,
             top: 10,
             width: 200,
             height: 50,
@@ -105,20 +153,21 @@ const Projects = () => {
         >
           Add Projects
         </Button>
-
+        
+</div>
 
       <div div style={{
-        position: "absolute",
-        top: 100,
-        marginTop:100
+        position: "static",
+       
+        marginTop:10
       }
       }>
   <Stack spacing={4}>
-      <Grid container spacing={2}>
-          {projects.map((pro) => (
+      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+         {projects.filter(project=>project.name.toLowerCase().includes(sValue)).map((pro) => (
 
-            <Grid item>
-              <Box sx={{ maxWidth: 600, minHeight: 150, minWidth:600  }}>
+            <Grid item xs  = {4} >
+              <Box sx={{ width: 350, minHeight: 150}}>
               <Card>
                 <CardContent
                   component="img"
@@ -141,7 +190,9 @@ const Projects = () => {
               </Box>
             
           </Grid>
-        ))}
+          ))
+          
+        }
           </Grid>
           </Stack>
         </div>
@@ -193,6 +244,8 @@ const Projects = () => {
                 setDescription(e.target.value);
               }}
             />
+            <FormLabel sx={{ color: "black", minWidth: '105px' }}>Upload Photo* :</FormLabel>
+            <input id="file" name="file" type="file" onChange={(e) => setPhoto("photo", e.currentTarget.files[0])} />
             {projectName === "" ||
               date === "" ||
               description === "" ||

@@ -40,10 +40,18 @@ const findProjectByID = async (req, res) => {
         .catch((err) => { res.status(200).send(err) })
     
 }
+const search = async (req, res) => {
+    const search = req.body.Search
+    console.log(search)
+    await Project.find({ name: {$regex:search}})
+        .then((data) => { res.status(200).send(data) })
+    .catch((err)=>res.status(500).send(err))
+}
 module.exports = {
     addProjects,
     readProjects,
     updateProjects,
     deleteProjects,
-    findProjectByID
+    findProjectByID,
+    search
 }

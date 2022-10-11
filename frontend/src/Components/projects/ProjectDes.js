@@ -6,8 +6,10 @@ import { Link, useParams } from "react-router-dom";
 import MuiAlert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import Grid from "@mui/material/Grid";
+import { useNavigate } from "react-router-dom";
 
 const ProjectDes = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const [project, setProject] = useState("");
 
@@ -31,9 +33,14 @@ const ProjectDes = () => {
     axios
       .delete(`http://localhost:5000/project/delete/${params.id}`)
       .then(() => {
-        setMsg("Massage Deleted Sucessfully");
+        setTimeout(() => {
+          setMsg("Massage Deleted Sucessfully");
         SetSeverity("success");
         setOpenSnack(true);
+        navigate('/adminDashboard')
+        },30)
+        
+
       })
       .catch((err) => {
         setMsg("Oops! Somthing Went Wrong");
