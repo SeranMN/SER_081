@@ -1,17 +1,5 @@
-import React from 'react'
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import React, { useState, useEffect } from 'react'
+
 import SearchBar from './SearchBar';
 import Container from '@mui/material/Container';
 import FilterStatus from './FilterStatus';
@@ -19,62 +7,107 @@ import FilterYear from './FilterYear';
 import GenerateReports from './GenerateReports';
 import AddEvents from './AddEvents';
 import Grid from '@mui/material/Grid';
+import axios from 'axios'
+import EventList from './EventList';
+import { useSelector } from 'react-redux';
 
 const EventScheduling = () => {
+
+    const [events, setEvents] = useState([])
+    const [toggle, setToggle] = useState(false)
+    const [searchTerm, setSearchTerm] = useState("");
+    const status = useSelector(state => state.filterEvents.status)
+    const year = useSelector(state => state.filterEvents.year)
+
+    useEffect(() => {
+        if (!searchTerm && !status && !year) {
+            function getEvents() {
+                axios.get(`http://localhost:5000/eventScheduling/viewevents`).then((res) => {
+                    console.log(res.data)
+                    setEvents(res.data)
+
+                }).catch((err) => {
+                    alert(err.message);
+                    console.log(err.message);
+                })
+            }
+            getEvents()
+        }
+
+    }, [toggle, searchTerm, status,year])
+
+    const findEvents = (eventName) => {
+        if (eventName) {
+            axios.get(`http://localhost:5000/eventScheduling/search/${eventName}`)
+
+                .then((res) => {
+                    let arr = res.data;
+                    let i;
+                    let list = [];
+                    for (i = 0; i < arr.length; i++) {
+                        list.push(arr[i]);
+                    }
+                    setEvents(list)
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+
+        }
+    };
+
+    useEffect(() => {
+        let query
+        if (status && year) {
+            query = `?eventStatus=${status}&year=${year}`
+        }
+        else if (status) {
+            query = `?eventStatus=${status}`
+        }
+        else if (year) {
+            query = `?year=${year}`
+        }
+        axios.get(`http://localhost:5000/eventScheduling/filter${query}`)
+        .then((res) => {
+            console.log(res.data, "res.data")
+            let arr = res.data;
+            let i;
+            let list = [];
+            for (i = 0; i < arr.length; i++) {
+                list.push(arr[i]);
+            }
+            setEvents(list)
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+    }, [status, year])
+
+
     return (
         <>
-            <Container sx={{ ml: 36 }}>
-                <SearchBar />
+            <Container sx={{ ml: 40 }}>
+                <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} findEvents={findEvents} />
             </Container>
             <Container sx={{ mt: 4 }}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} md={8} lg={2}>
-                        <FilterStatus />
+                        <FilterStatus/>
                     </Grid>
                     <Grid item xs={12} md={8} lg={2}>
-                        <FilterYear />
+                        <FilterYear/>
                     </Grid>
                     <Grid item xs={12} md={8} lg={2}>
                         <GenerateReports />
                     </Grid>
-                    <Grid item sx={{display:"flex", justifyContent:"flex-end"}} xs={12} md={8} lg={6}>
-                        <AddEvents />
+                    <Grid item sx={{ display: "flex", justifyContent: "flex-end" }} xs={12} md={8} lg={6}>
+                        <AddEvents setToggle={setToggle} toggle={toggle} />
                     </Grid>
                 </Grid>
             </Container>
+            <EventList events={events} setToggle={setToggle} toggle={toggle} />
 
-            <Card sx={{ maxWidth: 360, mt: 4 }}>
-                <CardHeader
-                    action={
-                        <IconButton aria-label="settings">
-                            <MoreVertIcon />
-                        </IconButton>
-                    }
-                    title="Shrimp and Chorizo Paella"
-                    subheader="September 14, 2016 12.30 p.m."
-                />
-                <CardMedia
-                    component="img"
-                    height="194"
-                    image="/static/images/cards/paella.jpg"
-                    alt="Paella dish"
-                />
-                <CardContent>
-                    <Typography variant="body2" color="text.secondary">
-                        This impressive paella is a perfect party dish and a fun meal to cook
-                        together with your guests. Add 1 cup of frozen peas along with the mussels,
-                        if you like.
-                    </Typography>
-                </CardContent>
-                <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                        <FavoriteIcon />
-                    </IconButton>
-                    <IconButton aria-label="share">
-                        <ShareIcon />
-                    </IconButton>
-                </CardActions>
-            </Card>
         </>
     )
 }

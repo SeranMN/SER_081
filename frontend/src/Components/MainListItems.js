@@ -8,24 +8,32 @@ import PeopleIcon from '@mui/icons-material/People';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import AdminHome from './AdminHome';
 import EventScheduling from './eventScheduling/EventScheduling';
-import ViewBoardMembers from './boardMembers/ViewBoardMembers';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import EventIcon from '@mui/icons-material/Event';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import Projects from './projects/projects';
+import { useDispatch } from 'react-redux';
+import { setView } from '../store/reducers/containerReducer';
+import ViewBoardMembers from './boardMembers/ViewBoardMembers';
 
-const MainListItems = ({ setView, setHeader }) => {
+const MainListItems = ({setHeader}) => {
+    const dispatch = useDispatch()
+
     return (
         <>
             <ListItemButton onClick={() => {
                 setHeader("Dashboard")
-                setView(<AdminHome />)
+                dispatch(setView('AdminHome'))
             }}>
                 <ListItemIcon>
                     <DashboardIcon />
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => {
+                setHeader("Projects")
+                // setView(<Projects/>)
+            }}>
                 <ListItemIcon>
                     <DriveFolderUploadIcon />
                 </ListItemIcon>
@@ -48,7 +56,7 @@ const MainListItems = ({ setView, setHeader }) => {
             </ListItemButton>
             <ListItemButton onClick={() => {
                 setHeader("Events")
-                setView(<EventScheduling />)
+                dispatch(setView('EventScheduling'))
             }}>
                 <ListItemIcon>
                     <EventIcon />

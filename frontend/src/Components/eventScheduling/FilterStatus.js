@@ -4,12 +4,16 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { useDispatch } from 'react-redux';
+import { setStatus } from '../../store/reducers/filterEventReducer';
+import { useSelector } from 'react-redux';
 
-const FilterStatus = () => {
-    const [age, setAge] = React.useState('');
+const FilterStatus = ({report}) => {
+    const status = useSelector(state => state.filterEvents.status)
 
+    const dispatch = useDispatch()
     const handleChange = (event) => {
-        setAge(event.target.value);
+        dispatch(setStatus(event.target.value))
     };
 
     return (
@@ -19,13 +23,17 @@ const FilterStatus = () => {
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={age}
+                    value={status}
                     label="Event Status"
                     onChange={handleChange}
                 >
-                    <MenuItem value={10}>Pending</MenuItem>
-                    <MenuItem value={20}>Approved</MenuItem>
-                    <MenuItem value={30}>Rejected</MenuItem>
+                    
+                    <MenuItem value={""}>None</MenuItem>
+                    <MenuItem value={"Pending"}>Pending</MenuItem>
+                    <MenuItem value={"Publish"}>Publish</MenuItem>
+                    {report &&
+                        <MenuItem value={"Cancel"}>Cancelled</MenuItem>
+                    }
                 </Select>
             </FormControl>
         </Box>

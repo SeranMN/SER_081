@@ -3,7 +3,16 @@ const eventSchedulingSchema = new mongoose.Schema ({
     eventName: {
         type: String,
     },
+    eventStatus: {
+        type: String
+    },
     date:{
+        type: String
+    },
+    year:{
+        type: String
+    },
+    month:{
         type: String
     },
     avatar:{
