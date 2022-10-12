@@ -21,6 +21,8 @@ const MemberList = ({ members }) => {
         <Grid container spacing={3}>
             {members.map((event, index) => (
                 <Grid item xs={12} md={8} lg={4}>
+
+                    {/* <MembersCard member={member} setToggle={setToggle} toggle={toggle}/> */}
                     <Card sx={{ maxWidth: 360, mt: 4 }}>
                         <CardHeader
                             action={
@@ -44,7 +46,7 @@ const MemberList = ({ members }) => {
                         </CardContent>
                         <div style={{ margin: '15px' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <Button sx={{ backgroundColor: "#4caf50", boxShadow: 'none' }} autoFocus variant='contained' color="error" startIcon={<EditIcon />}>
+                                <Button  sx={{ backgroundColor: "#4caf50", boxShadow: 'none' }} autoFocus variant='contained' color="error" startIcon={<EditIcon />}>
                                     Edit
                                 </Button>
                             </div>
