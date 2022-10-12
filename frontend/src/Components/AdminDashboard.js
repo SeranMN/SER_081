@@ -21,6 +21,8 @@ import { useSelector } from "react-redux";
 import EventScheduling from "./eventScheduling/EventScheduling";
 import AdminHome from "./AdminHome";
 import EventReports from "./eventScheduling/EventReports";
+import Projects from './projects/projects';
+import ViewBoardMembers from './boardMembers/ViewBoardMembers';
 
 function Copyright(props) {
     return (
@@ -95,7 +97,9 @@ function DashboardContent() {
     const components = {
         EventScheduling:EventScheduling,
         AdminHome:AdminHome,
-        EventReports:EventReports
+        EventReports:EventReports,
+        Projects:Projects,
+        ViewBoardMembers:ViewBoardMembers
     }
 
     const TargetComponent = components[view];

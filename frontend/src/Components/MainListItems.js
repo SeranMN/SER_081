@@ -14,7 +14,6 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import Projects from './projects/projects';
 import { useDispatch } from 'react-redux';
 import { setView } from '../store/reducers/containerReducer';
-import ViewBoardMembers from './boardMembers/ViewBoardMembers';
 
 const MainListItems = ({setHeader}) => {
     const dispatch = useDispatch()
@@ -32,7 +31,7 @@ const MainListItems = ({setHeader}) => {
             </ListItemButton>
             <ListItemButton onClick={() => {
                 setHeader("Projects")
-                // setView(<Projects/>)
+                dispatch(setView('Projects'))
             }}>
                 <ListItemIcon>
                     <DriveFolderUploadIcon />
@@ -41,7 +40,7 @@ const MainListItems = ({setHeader}) => {
             </ListItemButton>
             <ListItemButton onClick={() => {
                 setHeader("Board Members")
-                setView(< ViewBoardMembers />)
+                dispatch(setView('ViewBoardMembers'))
             }}>
                 <ListItemIcon>
                     <PeopleIcon />
