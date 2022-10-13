@@ -29,6 +29,13 @@ const ProjectDes = () => {
   const params = useParams();
   const [project, setProject] = useState("");
 
+   const [projectName, setProjectName] = useState('');
+  const [date, SetDate] = useState();
+  const [description, setDescription] = useState('project.Description');
+  const [photo, setPhoto] = useState()
+
+  
+
   const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
@@ -44,6 +51,9 @@ const ProjectDes = () => {
 
     setOpenSnack(false);
   };
+
+  
+
 
   const deleteProject = async () => {
     axios
@@ -68,31 +78,18 @@ const ProjectDes = () => {
 
  
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:5000/project/${params.id}`)
-      .then(async (res) => {
-        setProject(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  const [projectName, setProjectName] = useState(project.name);
-  const [date, SetDate] = useState(project.date);
-  const [description, setDescription] = useState(project.Description);
-  const [photo, setPhoto] = useState()
+ 
+ 
   
 
    const onSubmit = async () => {
     const project = {
       name: projectName,
-      Date: date.$D + "/" + date.$M + "/" + date.$y,
+      Date: date,
       Description: description,
     };
     axios
-      .post("http://localhost:5000/project/add", project)
+      .put(`http://localhost:5000/project/update/${params.id}`, project)
       .then(() => {
         setMsg("Successfully Added Projects");
         SetSeverity("success");
@@ -107,6 +104,20 @@ const ProjectDes = () => {
 
     setOpen(false);
   };
+
+   useEffect(() => {
+      axios
+      .get(`http://localhost:5000/project/${params.id}`)
+      .then((res) => {
+        setProject(res.data);
+        setProjectName(res.data.name)
+        setDescription(res.data.Description)
+        SetDate(res.data.date)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const style = {
     position: "absolute",
