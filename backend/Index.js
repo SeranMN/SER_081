@@ -2,7 +2,8 @@ const express = require("express");
 const cors = require('cors');
 const EventSchedulingAPI = require("./Src/api/eventScheduling")
 const bodyParser = require("body-parser");
-
+const userApi = require("./Src/api/Registraion.api")
+const loginApi = require ('./Src/api/login.api')
 const connectDB = require("./src/config/config");
 
 const app = express();
@@ -22,7 +23,10 @@ connectDB();
 
 app.use("/Project", ProjectApi());
 
-app.use("/eventScheduling",EventSchedulingAPI)
+app.use("/eventScheduling", EventSchedulingAPI)
+
+app.use("/user", userApi())
+app.use('/login',loginApi())
 
 app.listen(PORT, () => {
   console.log(`App listening at http://localhost:${PORT}`);

@@ -10,15 +10,23 @@ import Projects from './Components/projects/projects';
 import ProjectDes from './Components/projects/ProjectDes';
 import Home from './Components/Home';
 
+import Registration from './Components/registration/Registration';
+import Login from './Components/Login/Login';
+
 const Routing = () => {
     return (
         <BrowserRouter>
             <Routes>
+
+                <Route path='/registration' exact element={<Registration />} /> 
+                <Route path='/login' element={<Login />} />
+
                 <Route path='/' exact element={<Home/>} />
                 <Route path='/adminDashboard' exact element={<Dashboard />} />
                 <Route path='/events' exact element={<EventScheduling />} />
                 <Route path='/projects' exact element={<Projects />} />
-                <Route path='/projectsdes/:id' element={<ProjectDes/>} />
+                <Route path='/projectsdes/:id' element={<ProjectDes />} />
+                
                 
              </Routes>
         
