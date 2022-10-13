@@ -17,8 +17,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MainListItems from "./MainListItems";
+import { useSelector } from "react-redux";
+import EventScheduling from "./eventScheduling/EventScheduling";
 import AdminHome from "./AdminHome";
-
+import EventReports from "./eventScheduling/EventReports";
 
 function Copyright(props) {
     return (
@@ -86,12 +88,17 @@ function DashboardContent() {
         setOpen(!open);
     };
 
-    useEffect(() => {
-        setView(<AdminHome/>)
-    },[])
+    const [header, setHeader] = useState("Dashboard");    
 
-    const [view, setView] = useState(null);
-    const [header, setHeader] = useState("Dashboard");
+    const view = useSelector(state => state.container.view)
+
+    const components = {
+        EventScheduling:EventScheduling,
+        AdminHome:AdminHome,
+        EventReports:EventReports
+    }
+
+    const TargetComponent = components[view];
 
     return (
             <Box sx={{ display: 'flex' }}>
@@ -145,7 +152,7 @@ function DashboardContent() {
                     </Toolbar>
                     <Divider />
                     <List component="nav">
-                        <MainListItems setHeader={setHeader} setView={setView} />
+                        <MainListItems setHeader={setHeader}  />
                         <Divider sx={{ my: 1 }} />
                         {/* {secondaryListItems} */}
                     </List>
@@ -164,8 +171,9 @@ function DashboardContent() {
                 >
                     <Toolbar />
                     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                            {view}
-                        <Copyright sx={{ pt: 4 }} />
+                            {TargetComponent &&
+                                <TargetComponent/>
+                            }
                     </Container>
                 </Box>
             </Box>
