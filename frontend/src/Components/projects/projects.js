@@ -1,7 +1,7 @@
 import { useState, useEffect, forwardRef, React } from "react";
 import axios from "axios";
 import Modal from "@mui/material/Modal";
-import { TextareaAutosize, Typography } from "@mui/material";
+import {  TextareaAutosize, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -16,12 +16,15 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import { Link } from "react-router-dom";
-import {FormLabel} from "@mui/material";
+import { FormLabel } from "@mui/material";
+import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
+
 
 const Projects = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [Reportopen, setReportOpen] = useState(false);
 
   const [projectName, setProjectName] = useState();
   const [date, SetDate] = useState("");
@@ -43,6 +46,14 @@ const Projects = () => {
 
     setOpenSnack(false);
   };
+
+  function CustomToolbar() {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarExport printOptions={{ disableToolbarButton: true }}  />
+    </GridToolbarContainer>
+  );
+}
 
   const onSubmit = async () => {
     const project = {
@@ -67,7 +78,7 @@ const Projects = () => {
     setOpen(false);
   };
 
-  const [Search, setSearch] = useState([])
+  
   const [sValue,setSvalue] = useState('')
 
   const [projects, setProjects] = useState([]);
@@ -81,36 +92,40 @@ const Projects = () => {
       .catch((err) => console.log(err));
   }, [onSubmit]);
 
-  const find = (value) => {
-    
-    
-    
-     
-      axios
-      .post("http://localhost:5000/project/search",{"Search":value})
-        .then((res) => {
-        console.log(res.data)
-          setSearch(res.data);
-          
-      })
-      .catch((err) => console.log(err));
-    
-    
-  }
-    
   
- 
-
   const style = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 450,
+    width: 1000,
     bgcolor: "background.paper",
     boxShadow: 24,
     p: 4,
+
   };
+
+  const columns = [
+    {
+      field: "name",
+      headerName: "Name",
+      width: 200,
+      editable: true,
+    },
+
+    {
+      field: "Date",
+      headerName: "Date",
+      width: 200,
+      editable: true,
+    },
+    {
+      field: "Description",
+      headerName: "Description",
+      width: 255,
+    }
+    
+  ];
   return (
     <>
       <div div style={{
@@ -126,7 +141,7 @@ const Projects = () => {
           
           }} />
         <Button
-          onClick={handleOpen}
+          onClick={()=>{setReportOpen(true)}}
           variant="contained"
           
           style={{
@@ -258,10 +273,40 @@ const Projects = () => {
             ) : (
               <Button variant="contained" color="success" onClick={onSubmit}>
                 Submit
-              </Button>
+                </Button>
+                
             )}
+            
           </Stack>
         </Box>
+      </Modal>
+
+      <Modal
+        open={Reportopen}
+        onClose={()=>{setReportOpen(false)}}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        
+        <Box sx={style}>
+          
+            <DataGrid
+              components={{
+                Toolbar: CustomToolbar
+              }}
+              getRowId={(project) => project._id}
+              rows={projects}
+              columns={columns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              checkboxSelection
+              disableSelectionOnClick
+              sx={{height:500}}
+            />
+            
+          
+    
+      </Box>
       </Modal>
 
       <Snackbar
