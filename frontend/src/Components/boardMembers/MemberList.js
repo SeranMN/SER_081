@@ -15,11 +15,22 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
+import MembersCard from './MembersCard';
 
-const MemberList = ({ members }) => {
+const MemberList = ({ members, toggle, setToggle }) => {
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
         <Grid container spacing={3}>
-            {members.map((event, index) => (
+            {members.map((member, index) => (
                 <Grid item xs={12} md={8} lg={4}>
 
                     {/* <MembersCard member={member} setToggle={setToggle} toggle={toggle}/> */}
@@ -30,25 +41,24 @@ const MemberList = ({ members }) => {
                                     <MoreVertIcon />
                                 </IconButton>
                             }
-                            title={event.designation}
-                            subheader={event.boardMemberName}
+                            title={member.designation} 
+                            subheader={<><p>{member.boardMemberName}</p> <>{member.year}</></>} 
                         />
                         <CardMedia
                             component="img"
                             height="194"
-                            image={event.avatar}
+                            image={member.avatar}
                             alt="Paella dish"
                         />
                         <CardContent>
                             <Typography variant="body2" color="text.secondary">
-                                {event.description}
+                                {member.description}
                             </Typography>
                         </CardContent>
                         <div style={{ margin: '15px' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <Button  sx={{ backgroundColor: "#4caf50", boxShadow: 'none' }} autoFocus variant='contained' color="error" startIcon={<EditIcon />}>
-                                    Edit
-                                </Button>
+                                <MembersCard member={member} setToggle={setToggle} toggle={toggle}/>
+                               
                             </div>
                         </div>
                     </Card>

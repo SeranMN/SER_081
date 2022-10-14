@@ -17,6 +17,7 @@ router.post("/create", upload.single("file"), async (req, res) => {
         // Create new Event
         let boardMembersScheme = new BoardMembersScheme({
             boardMemberName: req.body.boardMemberName,
+            year: req.body.year,
             designation: req.body.designation,
             avatar: result.secure_url,
             cloudinary_id: result.public_id,
@@ -48,64 +49,6 @@ router.get("/viewMembers", async (req, res) => {
 });    
 
 
-// //update BoardMember with id
-// router.put("/updateMembers", async (req, res) => {
-
-//     if(req.body){
-//         let id = req.body._id;
-      
-//             const data={
-//                 // userId : req.body.userId,
-//                 boardMemberName: req.body.boardMemberName,
-//                 designation: req.body.designation,
-//                 description: req.body.description,
-//                 avatar: req.body.avatar,
-//                 cloudinary_id: req.body.cloudinary_id
-            
-//             }
-            
-//             const BoardMembersScheme = await BoardMembersScheme.findById(id);
-         
-//             await BoardMembersScheme.findByIdAndUpdate(id,data)
-//                 .then(data=>{
-//                     res.status(200).send(data)
-//                 })
-//                 .catch(err=>{res.send(err)});
-        
-//     }
-// })
-
-
-// //delete Board Members
-// router.delete("/deleteMembers", async (req, res) => {
-
-//     if (req.params.id) {
-//         const boardMembers = await BoardMembersScheme.findById(req.params.id);
-//         if(reception){
-           
-//             //delete data
-//             await BoardMembersScheme.findByIdAndDelete(req.params.id, (err, result) => {
-//                 if (err) return res.status(500).send(err);
-//                 return res.status(200).send(result);
-//             });
-//         }
-//     }
-// })
-
-
-// //Search
-// const SearchReception = async (req, res) => {
-    
-//     await Reception.find({'receptionName': { $regex: '.*' + req.params.id + '.*' } },(err,result)=>{
-//         if(err){
-//             console.log(err);
-//         }else{
-//             res.send(result);
-//         }
-//     })
-// };
-
-
 //Update
 router.put("/update/:id", upload.single("file"), async (req, res) => {
     let fileName = req.body.fileName
@@ -126,6 +69,7 @@ router.put("/update/:id", upload.single("file"), async (req, res) => {
       let data = {
         boardMemberName: req.body.eventName || BoardMembers.boardMemberName,
         designation: req.body.designation || BoardMembers.designation,
+        year: req.body.year|| BoardMembers.year,
         avatar: result?.secure_url || BoardMembers.avatar,
         cloudinary_id: result?.public_id || BoardMembers.cloudinary_id,
         description: req.body.description || BoardMembers.description,
@@ -151,7 +95,7 @@ router.put("/update/:id", upload.single("file"), async (req, res) => {
   //Search
   router.get("/search/:id", async (req, res) => {
   
-    await EventSchedulingScheme.find({ 'eventName': { $regex: '.*' + req.params.id + '.*' } }).then((data) => { res.status(200).send(data) })
+    await BoardMembersScheme.find({ 'boardMemberName': { $regex: '.*' + req.params.id + '.*' } }).then((data) => { res.status(200).send(data) })
       .catch((err) => { res.status(500).send(err) })
   });
   

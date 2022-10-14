@@ -29,12 +29,12 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import PropTypes from 'prop-types';
 import ImageIcon from '@mui/icons-material/Image';
-import UploadPhoto from './UploadPhoto';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-
+import UploadPhoto from './MemberPhotoUpload';
+// import UploadPhoto from '../eventScheduling/UploadPhoto';
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -78,20 +78,13 @@ BootstrapDialogTitle.propTypes = {
 };
 
 
-const MembersCard = ({ event, toggle, setToggle }) => {
+const MembersCard = ({ member, setToggle, toggle}) => {
 
     const [open, setOpen] = React.useState(false);
     const [open1, setOpen1] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
     const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"]
     const today = new Date()
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     const handleClose1 = (event, reason) => {
         if (reason === 'clickaway') {
@@ -105,7 +98,7 @@ const MembersCard = ({ event, toggle, setToggle }) => {
         setOpen1(true);
     };
 
-    const handleClose2 = (event, reason) => {
+    const handleClose2 = (member, reason) => {
         if (reason === 'clickaway') {
             return;
         }
@@ -117,27 +110,30 @@ const MembersCard = ({ event, toggle, setToggle }) => {
         setOpen2(true);
     };
 
+    useEffect(() => {
+        console.log("member", member)
+    })
 
-    // const formatTime = (time) => {
-    //     var hours = time.getHours();
-    //     var minutes = time.getMinutes();
-    //     var ampm = hours >= 12 ? 'pm' : 'am';
-    //     hours = hours % 12;
-    //     hours = hours ? hours : 12; // the hour '0' should be '12'
-    //     minutes = minutes < 10 ? '0' + minutes : minutes;
-    //     var strTime = hours + ':' + minutes + ' ' + ampm;
-    //     return strTime;
-    // }
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <>
+            <Button onClick={handleClickOpen} sx={{ backgroundColor: "#4caf50", boxShadow: 'none' }} autoFocus variant='contained' color="error" startIcon={<EditIcon />}>
+                                    Edit {member.boardMemberName}
+            </Button>
             <Snackbar open={open1} autoHideDuration={5000} onClose={handleClose1} anchorOrigin={{
                 vertical: "top",
                 horizontal: "center"
             }}>
 
                 <Alert onClose={handleClose1} severity="success" sx={{ width: '100%' }}>
-                    The Event has been sucessfully edited
+                    Member Details has been sucessfully edited
                 </Alert>
             </Snackbar>
             <Snackbar open={open2} autoHideDuration={5000} onClose={handleClose2} anchorOrigin={{
@@ -146,37 +142,9 @@ const MembersCard = ({ event, toggle, setToggle }) => {
             }}>
 
                 <Alert onClose={handleClose2} severity="success" sx={{ width: '100%' }}>
-                    The Event has been Cancelled
+                    The Member has been Removed
                 </Alert>
             </Snackbar>
-            <Card sx={{ maxWidth: 360, mt: 4 }}>
-                <CardHeader
-                    sx={{ textAlign: 'left' }}
-                    action={
-                        <Chip label={event.eventStatus} sx={{ bgcolor: '#bdbdbd' }} />
-                    }
-                    title={event.eventName}
-                    subheader={(new Date(event.date).getMonth() + 1) + '/' + (new Date(event.date).getDate()) + '/' + (new Date(event.date).getFullYear())
-                        + ' ' + formatTime(new Date(event.time))}
-                />
-                <CardMedia
-                    component="img"
-                    height="194"
-                    image={event.avatar ? event.avatar : 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg'}
-                />
-                <CardContent>
-                    <Typography variant="body2" color="text.secondary">
-                        {event.description}
-                    </Typography>
-                </CardContent>
-                <div style={{ margin: '15px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Button onClick={handleClickOpen} sx={{ backgroundColor: "#4caf50", boxShadow: 'none' }} autoFocus variant='contained' startIcon={<EditIcon />}>
-                            Edit
-                        </Button>
-                    </div>
-                </div>
-            </Card>
             <BootstrapDialog
                 onClose={handleClose}
                 aria-labelledby="customized-dialog-title"
@@ -210,7 +178,6 @@ const MembersCard = ({ event, toggle, setToggle }) => {
                     })}
                     onSubmit={(values, { setSubmitting }) => {
                         console.log('values', values)
-                        console.log('member', member)
 
                         // console.log('values.date', values.date)
                         // console.log('values.photo', values.photo)
@@ -236,18 +203,16 @@ const MembersCard = ({ event, toggle, setToggle }) => {
                             // })
 
                             axios.delete(`http://localhost:5000/boardMembers/delete/${member._id}`).then((res) => {
-                                setToggle(!toggle)
                                 handleClick2()
-                                setOpen(false);
                             }).catch((err) => {
                                 console.log(err, "errr")
                             })
                         }
                         else{
                         axios.put(`http://localhost:5000/boardMembers/update/${member._id}`, formData).then((res) => {
-                            setToggle(!toggle)
                             handleClick()
-                            setOpen(false);
+                            setToggle(!toggle)
+                            handleClose()
                         }).catch((err) => {
                             console.log(err, "errr")
                         })
@@ -279,9 +244,9 @@ const MembersCard = ({ event, toggle, setToggle }) => {
                                         <MenuItem value={"Cancel"}>Cancel</MenuItem>
                                     </Select>
                                 </Stack> */}
-                                <ErrorMessage name="eventName">
+                                {/* <ErrorMessage name="boardMemberName">
                                     {msg => <div style={{ color: 'red' }} className="film-details-input-validation">{msg}</div>}
-                                </ErrorMessage>
+                                </ErrorMessage> */}
                                 {/* <Stack direction="row" spacing={8} alignItems='center' mt={4}>
                                     <FormLabel sx={{ color: "black", minWidth: '105px' }}>Date* :</FormLabel>
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -293,7 +258,7 @@ const MembersCard = ({ event, toggle, setToggle }) => {
                                         />
                                     </LocalizationProvider>
                                 </Stack> */}
-                                <ErrorMessage name="date">
+                                {/* <ErrorMessage name="date">
                                     {msg => <div style={{ color: 'red' }} className="film-details-input-validation">{msg}</div>}
                                 </ErrorMessage>
                                 <Stack direction="row" spacing={8} alignItems='center' mt={4}>
@@ -308,10 +273,10 @@ const MembersCard = ({ event, toggle, setToggle }) => {
                                 </Stack>
                                 <ErrorMessage name="time">
                                     {msg => <div style={{ color: 'red' }} className="film-details-input-validation">{msg}</div>}
-                                </ErrorMessage>
+                                </ErrorMessage> */}
                                 <Stack direction="row" spacing={7} alignItems='center' mt={4}>
                                     <FormLabel sx={{ color: "black", minWidth: '105px' }}>Upload Photo* :</FormLabel>
-                                    <UploadPhoto name="photo" avatar={event.avatar} />
+                                    <UploadPhoto name="photo" avatar={member.avatar} />
 
                                     {/* <input id="file" name="file" type="file" onChange={(e) => props.setFieldValue("photo", e.currentTarget.files[0])} /> */}
                                 </Stack>
@@ -342,7 +307,7 @@ const MembersCard = ({ event, toggle, setToggle }) => {
                                     {props.dirty &&
                                         <Button autoFocus onClick={props.submitForm} variant='contained' >
                                             {props.values.eventStatus == "Cancel" ?
-                                                `Cancel the Event`
+                                                `Cancel`
                                                 :
                                                 `Save`
                                             }

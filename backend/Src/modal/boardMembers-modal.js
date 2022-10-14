@@ -7,6 +7,9 @@ const boardMembersSchema = new mongoose.Schema({
     designation:{
         type:String
     },
+    year:{
+        type:String
+    },
     description:{
         type:String
     },

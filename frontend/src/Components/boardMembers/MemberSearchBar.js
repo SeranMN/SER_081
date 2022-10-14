@@ -4,7 +4,7 @@ import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 
-const SearchBar = ({ setSearchTerm, searchTerm, findMembers }) => {
+const MemberSearchBar = ({ setSearchTerm, searchTerm, findMembers }) => {
     const handleChange = (e) => {
         findMembers(e.target.value)
         setSearchTerm(e.target.value);
@@ -30,4 +30,4 @@ const SearchBar = ({ setSearchTerm, searchTerm, findMembers }) => {
     )
 }
 
-export default SearchBar
+export default MemberSearchBar

@@ -4,12 +4,17 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { setDesignation } from '../../store/reducers/filterBoardMembersReducer';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+
 
 const Designation = () => {
-    const [age, setAge] = React.useState('');
+    const designation = useSelector(state => state.filterBoards.designation)
+    const dispatch = useDispatch()
 
     const handleChange = (event) => {
-        setAge(event.target.value);
+        dispatch(setDesignation(event.target.value));
     };
 
     return (
@@ -19,13 +24,13 @@ const Designation = () => {
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={age}
+                    value={designation}
                     label="Event Status"
                     onChange={handleChange}
                 >
-                    <MenuItem value={10}>Secreatary</MenuItem>
-                    <MenuItem value={20}>Treasurer</MenuItem>
-                    <MenuItem value={30}>President</MenuItem>
+                    <MenuItem value={'secretary'}>Secreatary</MenuItem>
+                    <MenuItem value={'Treasurer'}>Treasurer</MenuItem>
+                    <MenuItem value={'President'}>President</MenuItem>
                 </Select>
             </FormControl>
         </Box>
