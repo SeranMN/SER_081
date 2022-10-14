@@ -24,6 +24,7 @@ import EventReports from "./eventScheduling/EventReports";
 import Projects from "./projects/projects";
 import ProjectDes from "./projects/ProjectDes";
 import ProjectReport from "./projects/ProjectReport";
+import ViewBoardMembers from './boardMembers/ViewBoardMembers';
 
 function Copyright(props) {
     return (
@@ -101,8 +102,8 @@ function DashboardContent() {
         EventReports: EventReports,
         Projects: Projects,
         ProjectDes: ProjectDes,
-        ProjectReport:ProjectReport
-        
+        ProjectReport:ProjectReport,
+        ViewBoardMembers:ViewBoardMembers
     }
 
     const TargetComponent = components[view];
