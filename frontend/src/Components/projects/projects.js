@@ -269,6 +269,10 @@ const Projects = () => {
         open={openSnack}
         autoHideDuration={6000}
         onClose={handleCloseSnack}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center"
+        }}
       >
         <Alert
           onClose={handleCloseSnack}
