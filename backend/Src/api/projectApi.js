@@ -7,6 +7,7 @@ module.exports = function () {
     router.get('/', ProjectController.readProjects);
     router.put('/update/:id', ProjectController.updateProjects)
     router.delete('/delete/:id', ProjectController.deleteProjects)
-    router.get('/:id',ProjectController.findProjectByID)
+    router.get('/:id', ProjectController.findProjectByID)
+    router.post('/search',ProjectController.search)
     return router;
 }

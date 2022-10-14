@@ -31,7 +31,9 @@ const MainListItems = ({setHeader}) => {
             </ListItemButton>
             <ListItemButton onClick={() => {
                 setHeader("Projects")
+
                 dispatch(setView('Projects'))
+
             }}>
                 <ListItemIcon>
                     <DriveFolderUploadIcon />
