@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require('cors');
 const EventSchedulingAPI = require("./Src/api/eventScheduling")
+const BoardMembersAPI = require("./Src/api/boardMembers-api")
+
 const bodyParser = require("body-parser");
 const userApi = require("./Src/api/Registraion.api")
 const loginApi = require ('./Src/api/login.api')
@@ -23,8 +25,8 @@ connectDB();
 
 app.use("/Project", ProjectApi());
 
-app.use("/eventScheduling", EventSchedulingAPI)
-
+app.use("/eventScheduling",EventSchedulingAPI)
+app.use("/boardMembers", BoardMembersAPI)
 app.use("/user", userApi())
 app.use('/login',loginApi())
 
