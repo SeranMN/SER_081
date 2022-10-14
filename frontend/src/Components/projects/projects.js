@@ -15,12 +15,16 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import { Link } from "react-router-dom";
 import { FormLabel } from "@mui/material";
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
-
+import { useDispatch } from 'react-redux';
+import { setView } from '../../store/reducers/containerReducer';
+import { setId } from "../../store/reducers/projectReducer";
 
 const Projects = () => {
+   const dispatch = useDispatch()
+   
+  
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -47,13 +51,8 @@ const Projects = () => {
     setOpenSnack(false);
   };
 
-  function CustomToolbar() {
-  return (
-    <GridToolbarContainer>
-      <GridToolbarExport printOptions={{ disableToolbarButton: true }}  />
-    </GridToolbarContainer>
-  );
-}
+  
+
 
   const onSubmit = async () => {
     const project = {
@@ -105,27 +104,11 @@ const Projects = () => {
 
   };
 
-  const columns = [
-    {
-      field: "name",
-      headerName: "Name",
-      width: 200,
-      editable: true,
-    },
 
-    {
-      field: "Date",
-      headerName: "Date",
-      width: 200,
-      editable: true,
-    },
-    {
-      field: "Description",
-      headerName: "Description",
-      width: 255,
-    }
-    
-  ];
+  const des = (id) => {
+    dispatch(setView('ProjectDes'))
+    dispatch(setId(id))
+  }
   return (
     <>
       <div div style={{
@@ -141,7 +124,7 @@ const Projects = () => {
           
           }} />
         <Button
-          onClick={()=>{setReportOpen(true)}}
+          onClick={()=>{dispatch(setView('ProjectReport'))}}
           variant="contained"
           
           style={{
@@ -196,10 +179,9 @@ const Projects = () => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Link to={`/projectsdes/${pro._id}`}>
-                      <Button size="small">Learn More</Button>
-                    </Link>
-
+                    
+                      <Button size="small" onClick = {()=>{des(pro._id)}}>Learn More</Button>
+                   
                   </CardActions>
                 </Card>
               </Box>
@@ -281,33 +263,7 @@ const Projects = () => {
         </Box>
       </Modal>
 
-      <Modal
-        open={Reportopen}
-        onClose={()=>{setReportOpen(false)}}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        
-        <Box sx={style}>
-          
-            <DataGrid
-              components={{
-                Toolbar: CustomToolbar
-              }}
-              getRowId={(project) => project._id}
-              rows={projects}
-              columns={columns}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
-              checkboxSelection
-              disableSelectionOnClick
-              sx={{height:500}}
-            />
-            
-          
-    
-      </Box>
-      </Modal>
+     
 
       <Snackbar
         open={openSnack}
