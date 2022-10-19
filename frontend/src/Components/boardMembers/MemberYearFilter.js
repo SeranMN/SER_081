@@ -9,7 +9,7 @@ import { setYear } from '../../store/reducers/filterEventReducer';
 import { useSelector } from 'react-redux';
 
 const MemberYearFilter = () => {
-    const year = useSelector(state => state.filterEvents.year)
+    const year = useSelector(state => state.filterBoardMember.year)
     const dispatch = useDispatch()
 
     const handleChange = (member) => {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -15,7 +15,10 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import MembersCard from './MembersCard';
+import MemberRemove from './MemberRemove';
 
 const MemberList = ({ members, toggle, setToggle }) => {
     const [open, setOpen] = React.useState(false);
@@ -28,6 +31,22 @@ const MemberList = ({ members, toggle, setToggle }) => {
         setOpen(false);
     };
 
+    // const [open1, setOpen1] = useState(false);
+    // const handleClick1 = (event) => {
+    //     setOpen1(true);
+    // };
+    // const handleClose1 = () => {
+    //     setOpen1(false);
+    // };
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open1 = Boolean(anchorEl);
+    const handleClick1 = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose1 = () => {
+        setAnchorEl(null);
+    };
+
     return (
         <Grid container spacing={3}>
             {members.map((member, index) => (
@@ -35,15 +54,40 @@ const MemberList = ({ members, toggle, setToggle }) => {
 
                     {/* <MembersCard member={member} setToggle={setToggle} toggle={toggle}/> */}
                     <Card sx={{ maxWidth: 360, mt: 4 }}>
+
                         <CardHeader
-                            action={
-                                <IconButton aria-label="settings">
+                            action={<>
+                                <IconButton
+                                    aria-label="more"
+                                    id="long-button"
+                                    aria-controls={open1 ? 'long-menu' : undefined}
+                                    aria-expanded={open1 ? 'true' : undefined}
+                                    aria-haspopup="true"
+                                    onClick={handleClick1} >
                                     <MoreVertIcon />
                                 </IconButton>
+                                <Menu
+                                    id="long-menu"
+                                    anchorEl={anchorEl}
+                                    open={open1}
+                                    onClose={handleClose1}
+                                    PaperProps={{
+                                        style: {
+                                            width: '20ch',
+                                        },
+                                    }}
+                                >
+                                    <MemberRemove handleClose1={handleClose1} id={member._id} setToggle={setToggle} toggle={toggle}/>
+
+                                </Menu>
+                            </>
                             }
-                            title={member.designation} 
-                            subheader={<><p>{member.boardMemberName}</p> <>{member.year}</></>} 
+
+                            title={member.designation}
+                            subheader={<><p>{member.boardMemberName}</p> <>{member.year}</></>}
+
                         />
+
                         <CardMedia
                             component="img"
                             height="194"
@@ -57,8 +101,8 @@ const MemberList = ({ members, toggle, setToggle }) => {
                         </CardContent>
                         <div style={{ margin: '15px' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <MembersCard member={member} setToggle={setToggle} toggle={toggle}/>
-                               
+                                <MembersCard member={member} setToggle={setToggle} toggle={toggle} />
+
                             </div>
                         </div>
                     </Card>
