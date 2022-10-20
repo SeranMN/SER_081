@@ -68,7 +68,7 @@ const MainListItems = ({setHeader}) => {
                 <ListItemIcon>
                     <LibraryBooksIcon />
                 </ListItemIcon>
-                <ListItemText primary="Member" />
+                <ListItemText primary="Membership" />
             </ListItemButton>
             
         </>
