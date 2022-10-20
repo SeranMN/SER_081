@@ -14,10 +14,12 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import LoginIcon from '@mui/icons-material/Login';
+import { useNavigate } from 'react-router';
 
 const pages = ['Our Projects', 'Blogs','Our Leaders','About us'];
 
 const Header = () => {
+    const navigate = useNavigate();
     const [anchorElNav, setAnchorElNav] = useState(null)
     const [anchorElUser, setAnchorElUser] = useState(null)
 
@@ -35,6 +37,10 @@ const Header = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const navigateLogin = () => {
+        navigate('/login')
+    }
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
@@ -129,7 +135,7 @@ const Header = () => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Button variant="contained" startIcon={<LoginIcon />} sx={{ my: 1, mx: 1.5 }}>
+                        <Button variant="contained" startIcon={<LoginIcon />} sx={{ my: 1, mx: 1.5 }} onClick = {navigateLogin}>
                             Login
                         </Button>
                     </Box>
