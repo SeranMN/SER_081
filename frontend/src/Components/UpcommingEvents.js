@@ -10,8 +10,14 @@ import EventIcon from '@mui/icons-material/Event';
 import axios from 'axios';
 import moment from 'moment';
 import { useState } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const UpcommingEvents = () => {
+
+    useEffect(() => {
+        AOS.init();
+      }, [])
 
     // const rows = [
     //     createData('Legacy sdf sdf sdf sdfs', 'Oct 24,2022', '11.30 AM'),
@@ -41,10 +47,12 @@ const UpcommingEvents = () => {
                 let arr = res.data;
                 let i;
                 let list = [];
-                for (i = 0; i < arr.length; i++) {
-                    const { eventName, date, time } = arr[i]
+                let list2 = arr.sort((a,b) => new moment(a.date).format('YYYYMMDD') - new moment(b.date).format('YYYYMMDD'))
+                
+                for (i = 0; i < list2.length; i++) {
+                    const { eventName, date, time } = list2[i]
 
-                    if (datetime.diff(moment.utc(arr[i].date)) < 0) {
+                    if (datetime.diff(moment.utc(list2[i].date)) < 0) {
                         list.push({ eventName: eventName, 
                             date: (new Date(date).getMonth() + 1) + '/' + (new Date(date).getDate()) + '/' + (new Date(date).getFullYear()), 
                             time:  formatTime(new Date(time)) })
@@ -59,7 +67,7 @@ const UpcommingEvents = () => {
 
     return (
         <TableContainer sx={{ mt: 5, boxShadow: 'none', width: 'fit-content' }} component={Paper}>
-            <Table sx={{ maxWidth: '90%' }} size="small" aria-label="a dense table">
+            <Table sx={{ maxWidth: '90%' }} size="small" aria-label="a dense table" data-aos="fade-down" data-aos-duration="2000">
                 <TableBody>
                     {rows && rows.map((row) => (
                         <TableRow
