@@ -42,9 +42,10 @@ const findUserByEmail = async (req, res) => {
                 if (req.body.password == data.password) {
                     
                     const token = jwt.sign(data.email, "secret")
-                    res.header('auth-token', token).send(token)
-                    // console.log(token)
-                    //res.send(data);
+                    res.header('auth-token', token).send({
+                        "email": data.email,
+                        "role": data.role
+                    }) 
                 }
                 else {
                     res.send('Invalid')
