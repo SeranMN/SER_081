@@ -9,7 +9,6 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
-import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import axios from "axios";
 import MuiAlert from "@mui/material/Alert";
@@ -122,7 +121,7 @@ const Registration = () => {
                 label="Date of Birthday"
                 value={dob}
                 onChange={(e) => {
-                  setDob(e.value);
+                  setDob(e.target.value);
                 }}
                 style={{ width: 600 }}
                 renderInput={(params) => <TextField {...params} />}
@@ -197,7 +196,7 @@ const Registration = () => {
               sx={{ width: 600 }}
               value={pwd}
               onChange={(e) => {
-                setPwd(e.target.value)
+                setPwd(e)
               }}
             />
           </CardContent>

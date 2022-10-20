@@ -17,7 +17,7 @@ const Login = () => {
       .then((data) => {
         console.log(data);
         if (data.data == 'Invalid') {
-          <Alert Severity = "error" Msg = "Invalid Crenditals"/>
+          
         } else {
           sessionStorage.setItem('role', data.data.role)
           sessionStorage.setItem('mail',data.data.email)
