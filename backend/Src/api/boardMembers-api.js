@@ -67,7 +67,7 @@ router.put("/update/:id", upload.single("file"), async (req, res) => {
         result = await cloudinary.uploader.upload(req.file.path, { resource_type: "auto", public_id: fileName, folder: folder });
       }
       let data = {
-        boardMemberName: req.body.eventName || BoardMembers.boardMemberName,
+        boardMemberName: req.body.boardMemberName || BoardMembers.boardMemberName,
         designation: req.body.designation || BoardMembers.designation,
         year: req.body.year|| BoardMembers.year,
         avatar: result?.secure_url || BoardMembers.avatar,
