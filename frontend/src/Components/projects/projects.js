@@ -16,19 +16,18 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import { FormLabel } from "@mui/material";
-import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import { useDispatch } from 'react-redux';
 import { setView } from '../../store/reducers/containerReducer';
 import { setId } from "../../store/reducers/projectReducer";
 
 const Projects = () => {
    const dispatch = useDispatch()
-   
-  
+   const role = sessionStorage.getItem('role')
+ 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [Reportopen, setReportOpen] = useState(false);
+  const [togle, setToggle] = useState(false);
 
   const [projectName, setProjectName] = useState();
   const [date, SetDate] = useState("");
@@ -52,13 +51,14 @@ const Projects = () => {
   };
 
   
-
+console.log(photo)
 
   const onSubmit = async () => {
     const project = {
       name: projectName,
       Date: date.$D + "/" + date.$M + "/" + date.$y,
       Description: description,
+      photo:photo
     };
     axios
       .post("http://localhost:5000/project/add", project)
@@ -66,6 +66,7 @@ const Projects = () => {
         setMsg("Successfully Added Projects");
         SetSeverity("success");
         setOpenSnack(true);
+        setToggle(!togle)
       })
       .catch((err) => {
         setMsg("oops! Somthing Went Wrong");
@@ -89,7 +90,7 @@ const Projects = () => {
         setProjects(res.data);
       })
       .catch((err) => console.log(err));
-  }, [onSubmit]);
+  }, [togle]);
 
   
   const style = {
@@ -123,7 +124,10 @@ const Projects = () => {
           setSvalue (e.target.value.toLowerCase())
           
           }} />
-        <Button
+        
+        {(role == "admin" && (
+          <>
+          <Button
           onClick={()=>{dispatch(setView('ProjectReport'))}}
           variant="contained"
           
@@ -151,6 +155,9 @@ const Projects = () => {
         >
           Add Projects
         </Button>
+            </>
+        ))}
+        
         
 </div>
 
