@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import {Card, CardContent, Grid, Typography, TextField, Button } from '@material-ui/core'
+//import {Card, CardContent, Grid, Typography, TextField, Button } from '@material-ui/core'
+import {Card, TextField, Grid, Typography, Button, CardContent} from '@mui/material'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
@@ -37,7 +38,7 @@ function Addblog() {
 
   return (
     <div>
-        <Card style={{maxWidth:850, margin:"0 auto", marginTop:20, padding:"20px 0px", borderStyle:"outset"}}>
+        <Card style={{maxWidth:850, margin:"0 auto", marginTop:20, marginBottom:20, padding:"20px 0px", borderStyle:"outset"}}>
             <CardContent>
                 <Typography style={{marginLeft:360, marginBottom:20, fontWeight:'bold', fontSize:20}}>Add New Blog</Typography>
 
@@ -67,7 +68,7 @@ function Addblog() {
                     }}/>
                      </Grid>
                      <Grid xs={12} item>
-                     <Button type="submit" variant='contained' sx={{mt: 3}} color='primary' onClick={sendData} style={{marginLeft:365, marginTop:10}}>Publish</Button>
+                     <Button type="submit" variant='contained' sx={{mt: 3}} color='primary' onClick={sendData} style={{marginLeft:365}}>Publish</Button>
                      </Grid>
 
                  </Grid>

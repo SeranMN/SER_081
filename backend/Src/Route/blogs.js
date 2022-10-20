@@ -39,8 +39,8 @@ router.route("/").get((req,res)=>{
 
 router.route("/get/:id").get(async(req,res) =>{
     let id = req.params.id;
-    await Blog.findById(id).then(()=>{
-        res.status(200).send({status: "Blog Fetched"})
+    await Blog.findById(id).then((data)=>{
+        res.status(200).send(data)
     }).catch((err)=>{
         console.log(500);
     })

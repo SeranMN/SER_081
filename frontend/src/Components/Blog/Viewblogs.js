@@ -1,13 +1,15 @@
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import React,{useState, useEffect} from 'react'
 import "../Bstyles/listofblogs.css"
-import Button from '@material-ui/core/Button'
-
+import {Button} from '@mui/material'
+ 
 function Viewblogs() {
 
 
     const [listofblogs,setListoblogs] = useState([]);
-    
+    const navigate = useNavigate()
     useEffect(()=>{
 
         function getBlogs(){
@@ -20,6 +22,9 @@ function Viewblogs() {
         getBlogs();
     }, [])
 
+    const handleclick = ()=>{
+        navigate('/fullviewblog/${id}')
+    }
 
 
   return (
@@ -37,7 +42,7 @@ function Viewblogs() {
                 <h3>Author:{value.name}</h3>
                 </div>  
                 <Button style={{maxWidth:10, maxHeight:40, marginLeft:10, marginTop:10}} variant="contained" color="primary"
-             href="http://localhost:3000/fullviewblog">
+             onClick={()=>navigate(`/fullviewblog/${value._id}`)}>
               More..
             </Button>
                 </div>

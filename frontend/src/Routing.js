@@ -12,7 +12,7 @@ const Routing = () => {
         <Routes>
             <Route path = '/addblog' exact element={<Addblog/>}/>
             <Route path = '/viewblog' exact element={<Viewblogs/>}/>
-            <Route path = '/fullviewblog' exact element={<Fullviewblog/>}/>
+            <Route path = '/fullviewblog/:id' exact element={<Fullviewblog/>}/>
             <Route path = '/updateblog' exact element={<Updateblog/>}/>
             
         </Routes>
