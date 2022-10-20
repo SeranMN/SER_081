@@ -15,16 +15,19 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import { Link } from "react-router-dom";
 import { FormLabel } from "@mui/material";
-import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
-
+import { useDispatch } from 'react-redux';
+import { setView } from '../../store/reducers/containerReducer';
+import { setId } from "../../store/reducers/projectReducer";
 
 const Projects = () => {
+   const dispatch = useDispatch()
+   const role = sessionStorage.getItem('role')
+ 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [Reportopen, setReportOpen] = useState(false);
+  const [togle, setToggle] = useState(false);
 
   const [projectName, setProjectName] = useState();
   const [date, SetDate] = useState("");
@@ -47,19 +50,15 @@ const Projects = () => {
     setOpenSnack(false);
   };
 
-  function CustomToolbar() {
-  return (
-    <GridToolbarContainer>
-      <GridToolbarExport printOptions={{ disableToolbarButton: true }}  />
-    </GridToolbarContainer>
-  );
-}
+  
+console.log(photo)
 
   const onSubmit = async () => {
     const project = {
       name: projectName,
       Date: date.$D + "/" + date.$M + "/" + date.$y,
       Description: description,
+      photo:photo
     };
     axios
       .post("http://localhost:5000/project/add", project)
@@ -67,6 +66,7 @@ const Projects = () => {
         setMsg("Successfully Added Projects");
         SetSeverity("success");
         setOpenSnack(true);
+        setToggle(!togle)
       })
       .catch((err) => {
         setMsg("oops! Somthing Went Wrong");
@@ -90,7 +90,7 @@ const Projects = () => {
         setProjects(res.data);
       })
       .catch((err) => console.log(err));
-  }, [onSubmit]);
+  }, [togle]);
 
   
   const style = {
@@ -105,27 +105,11 @@ const Projects = () => {
 
   };
 
-  const columns = [
-    {
-      field: "name",
-      headerName: "Name",
-      width: 200,
-      editable: true,
-    },
 
-    {
-      field: "Date",
-      headerName: "Date",
-      width: 200,
-      editable: true,
-    },
-    {
-      field: "Description",
-      headerName: "Description",
-      width: 255,
-    }
-    
-  ];
+  const des = (id) => {
+    dispatch(setView('ProjectDes'))
+    dispatch(setId(id))
+  }
   return (
     <>
       <div div style={{
@@ -140,8 +124,11 @@ const Projects = () => {
           setSvalue (e.target.value.toLowerCase())
           
           }} />
-        <Button
-          onClick={()=>{setReportOpen(true)}}
+        
+        {(role == "admin" && (
+          <>
+          <Button
+          onClick={()=>{dispatch(setView('ProjectReport'))}}
           variant="contained"
           
           style={{
@@ -168,6 +155,9 @@ const Projects = () => {
         >
           Add Projects
         </Button>
+            </>
+        ))}
+        
         
 </div>
 
@@ -196,10 +186,9 @@ const Projects = () => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Link to={`/projectsdes/${pro._id}`}>
-                      <Button size="small">Learn More</Button>
-                    </Link>
-
+                    
+                      <Button size="small" onClick = {()=>{des(pro._id)}}>Learn More</Button>
+                   
                   </CardActions>
                 </Card>
               </Box>
@@ -281,38 +270,16 @@ const Projects = () => {
         </Box>
       </Modal>
 
-      <Modal
-        open={Reportopen}
-        onClose={()=>{setReportOpen(false)}}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        
-        <Box sx={style}>
-          
-            <DataGrid
-              components={{
-                Toolbar: CustomToolbar
-              }}
-              getRowId={(project) => project._id}
-              rows={projects}
-              columns={columns}
-              pageSize={5}
-              rowsPerPageOptions={[5]}
-              checkboxSelection
-              disableSelectionOnClick
-              sx={{height:500}}
-            />
-            
-          
-    
-      </Box>
-      </Modal>
+     
 
       <Snackbar
         open={openSnack}
         autoHideDuration={6000}
         onClose={handleCloseSnack}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center"
+        }}
       >
         <Alert
           onClose={handleCloseSnack}

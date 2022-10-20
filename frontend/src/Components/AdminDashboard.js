@@ -21,8 +21,16 @@ import { useSelector } from "react-redux";
 import EventScheduling from "./eventScheduling/EventScheduling";
 import AdminHome from "./AdminHome";
 import EventReports from "./eventScheduling/EventReports";
+import Projects from "./projects/projects";
+import ProjectDes from "./projects/ProjectDes";
+import ProjectReport from "./projects/ProjectReport";
+import ViewBoardMembers from './boardMembers/ViewBoardMembers';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useNavigate } from "react-router";
 
 function Copyright(props) {
+
+
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
@@ -35,6 +43,8 @@ function Copyright(props) {
     );
 }
 
+
+    
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -83,6 +93,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 function DashboardContent() {
+    const navigate = useNavigate();
     const [open, setOpen] = React.useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
@@ -95,10 +106,21 @@ function DashboardContent() {
     const components = {
         EventScheduling:EventScheduling,
         AdminHome:AdminHome,
-        EventReports:EventReports
+        EventReports: EventReports,
+        Projects: Projects,
+        ProjectDes: ProjectDes,
+        ProjectReport:ProjectReport,
+        ViewBoardMembers:ViewBoardMembers
     }
 
     const TargetComponent = components[view];
+
+    const logout = () => {
+        sessionStorage.removeItem('role')
+        sessionStorage.removeItem('mail')
+        navigate('/')
+    }
+
 
     return (
             <Box sx={{ display: 'flex' }}>
@@ -130,10 +152,10 @@ function DashboardContent() {
                         >
                             {header}
                         </Typography>
-                        <IconButton color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
+                        <IconButton color="inherit" onClick={logout}>
+                            
+                                <LogoutIcon/>
+                            
                         </IconButton>
                     </Toolbar>
                 </AppBar>

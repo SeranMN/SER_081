@@ -19,8 +19,14 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { FormLabel } from "@mui/material";
+import { useSelector } from "react-redux";
+import { useDispatch } from 'react-redux';
+import { setView } from '../../store/reducers/containerReducer';
 
 const ProjectDes = () => {
+  const id = useSelector(state => state.project.id)
+   const dispatch = useDispatch()
+
     const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -33,6 +39,8 @@ const ProjectDes = () => {
   const [date, SetDate] = useState();
   const [description, setDescription] = useState('project.Description');
   const [photo, setPhoto] = useState()
+
+  const [toggle, setToggle] = useState(false);
 
   
 
@@ -57,13 +65,14 @@ const ProjectDes = () => {
 
   const deleteProject = async () => {
     axios
-      .delete(`http://localhost:5000/project/delete/${params.id}`)
+      .delete(`http://localhost:5000/project/delete/${id}`)
       .then(() => {
         setTimeout(() => {
           setMsg("Massage Deleted Sucessfully");
         SetSeverity("success");
-        setOpenSnack(true);
-        navigate('/adminDashboard')
+          setOpenSnack(true);
+          dispatch(setView('Projects'))
+        
         },30)
         
 
@@ -89,11 +98,12 @@ const ProjectDes = () => {
       Description: description,
     };
     axios
-      .put(`http://localhost:5000/project/update/${params.id}`, project)
+      .put(`http://localhost:5000/project/update/${id}`, project)
       .then(() => {
-        setMsg("Successfully Added Projects");
+        setMsg("Successfully Edited Projects");
         SetSeverity("success");
         setOpenSnack(true);
+        setToggle(!toggle);
       })
       .catch((err) => {
         setMsg("oops! Somthing Went Wrong");
@@ -107,7 +117,7 @@ const ProjectDes = () => {
 
    useEffect(() => {
       axios
-      .get(`http://localhost:5000/project/${params.id}`)
+      .get(`http://localhost:5000/project/${id}`)
       .then((res) => {
         setProject(res.data);
         setProjectName(res.data.name)
@@ -117,7 +127,7 @@ const ProjectDes = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [toggle]);
 
   const style = {
     position: "absolute",
@@ -191,6 +201,10 @@ const ProjectDes = () => {
         open={openSnack}
         autoHideDuration={6000}
         onClose={handleCloseSnack}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center"
+        }}
       >
         <Alert
           onClose={handleCloseSnack}

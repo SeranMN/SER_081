@@ -32,7 +32,7 @@ const MainListItems = ({setHeader}) => {
             <ListItemButton onClick={() => {
                 setHeader("Projects")
 
-                 setView(<Projects/>)
+                dispatch(setView('Projects'))
 
             }}>
                 <ListItemIcon>
@@ -40,7 +40,10 @@ const MainListItems = ({setHeader}) => {
                 </ListItemIcon>
                 <ListItemText primary="Projects" />
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => {
+                setHeader("Board Members")
+                dispatch(setView('ViewBoardMembers'))
+            }}>
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>
