@@ -15,12 +15,19 @@ const Login = () => {
     
     axios.post(`http://localhost:5000/login/${email}`, { password:pwd })
       .then((data) => {
-        console.log(data.data);
+        console.log(data);
         if (data.data == 'Invalid') {
-          <Alert Severity = "error" Msg = "Invalid Crenditals"/>
+          
         } else {
-          navigate('/adminDashboard');
-          <Alert Severity="Sucess" Msg="Login Sucessfull" open={true} />
+          sessionStorage.setItem('role', data.data.role)
+          sessionStorage.setItem('mail',data.data.email)
+          if (data.data.role) {
+            navigate('/adminDashboard');
+          } else {
+            navigate('/')
+          }
+          
+          
         }
         
         
