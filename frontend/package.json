@@ -10,9 +10,7 @@
     "@mui/icons-material": "^5.10.3",
     "@mui/styles": "^5.10.3",
     "@mui/x-data-grid": "^5.17.6",
-
     "@mui/x-data-grid-generator": "^5.17.6",
-
     "@mui/x-date-pickers": "^5.0.0",
     "@reduxjs/toolkit": "^1.8.6",
     "@testing-library/jest-dom": "^5.16.5",
@@ -35,7 +33,8 @@
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
     "web-vitals": "^2.1.4",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "sweetalert2": "^11.4.32"
   },
   "scripts": {
     "start": "react-scripts start",

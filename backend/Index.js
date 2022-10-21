@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const userApi = require("./Src/api/Registraion.api")
 const loginApi = require ('./Src/api/login.api')
 const connectDB = require("./src/config/config");
-
+const blogsRouter = require("./Src/Route/blogs");
 const app = express();
 
 const ProjectApi = require('./Src/api/projectApi');
@@ -23,6 +23,7 @@ app.use(cors());
 
 connectDB();
 
+app.use("/blogs", blogsRouter);
 app.use("/Project", ProjectApi());
 
 app.use("/eventScheduling",EventSchedulingAPI)
