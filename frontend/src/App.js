@@ -1,4 +1,3 @@
-
 import './App.css';
 import Routing from './Routing';
 function App() {
@@ -6,8 +5,8 @@ function App() {
   return (
     <div className="App">
       <Routing/>
-      
     </div>
+    
   );
 }
 
