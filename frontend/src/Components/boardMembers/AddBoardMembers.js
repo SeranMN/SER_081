@@ -144,11 +144,15 @@ const AddBoardMembers = ({toggle, setToggle}) => {
                             .required('Required'),
                         photo: Yup.mixed()
                             .nullable()
-                            .required('Required')
                             .test(
                                 "FILE_FORMAT",
                                 "invalid format",
-                                (value) => value && SUPPORTED_FORMATS.includes(value?.type)
+                                (value) => {
+                                    if (!value) {
+                                        return true
+                                    }
+                                    return value && SUPPORTED_FORMATS.includes(value?.type)
+                                }
                             ),
 
                     })}
@@ -159,7 +163,7 @@ const AddBoardMembers = ({toggle, setToggle}) => {
                         formData.append('boardMemberName', values.boardMemberName)
                         formData.append('designation', values.designation)
                         formData.append('year', values.year)
-                        formData.append('fileName', values.photo.name)
+                        formData.append('fileName', values.photo && values.photo.name)
                         formData.append('description', values.description)
 
                         axios.post("http://localhost:5000/boardMembers/create", formData).then((res) => {
