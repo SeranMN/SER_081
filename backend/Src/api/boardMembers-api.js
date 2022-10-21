@@ -67,19 +67,19 @@ router.put("/update/:id", upload.single("file"), async (req, res) => {
       }
       result = await cloudinary.uploader.upload(req.file.path, { resource_type: "auto", public_id: fileName, folder: folder });
     }
-    let data = {
-      boardMemberName: req.body.eventName || BoardMembers.boardMemberName,
-      designation: req.body.designation || BoardMembers.designation,
-      year: req.body.year || BoardMembers.year,
-      avatar: result?.secure_url || BoardMembers.avatar,
-      cloudinary_id: result?.public_id || BoardMembers.cloudinary_id,
-      description: req.body.description || BoardMembers.description,
-    };
-    BoardMembers = await BoardMembersScheme.findByIdAndUpdate(req.params.id, data, { new: true });
-    res.json(BoardMembers);
-  } catch (err) {
-    console.log(err);
-  }
+      let data = {
+        boardMemberName: req.body.boardMemberName || BoardMembers.boardMemberName,
+        designation: req.body.designation || BoardMembers.designation,
+        year: req.body.year|| BoardMembers.year,
+        avatar: result?.secure_url || BoardMembers.avatar,
+        cloudinary_id: result?.public_id || BoardMembers.cloudinary_id,
+        description: req.body.description || BoardMembers.description,
+      };
+      BoardMembers = await BoardMembersScheme.findByIdAndUpdate(req.params.id, data, { new: true });
+      res.json(BoardMembers);
+    } catch (err) {
+      console.log(err);
+    }
 });
 
 

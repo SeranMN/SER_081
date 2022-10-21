@@ -21,18 +21,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import Stack from '@mui/material/Stack';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import dayjs from 'dayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 import PropTypes from 'prop-types';
 import ImageIcon from '@mui/icons-material/Image';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+// import Select from '@mui/material/Select';
+// import MenuItem from '@mui/material/MenuItem';
 import UploadPhoto from './MemberPhotoUpload';
 // import UploadPhoto from '../eventScheduling/UploadPhoto';
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -78,15 +73,15 @@ BootstrapDialogTitle.propTypes = {
 };
 
 
-const MembersCard = ({ member, setToggle, toggle}) => {
+const MembersCard = ({ member, setToggle, toggle }) => {
 
     const [open, setOpen] = React.useState(false);
     const [open1, setOpen1] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
     const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"]
-    const today = new Date()
+    // const today = new Date()
 
-    const handleClose1 = (event, reason) => {
+    const handleClose1 = (member, reason) => {
         if (reason === 'clickaway') {
             return;
         }
@@ -124,9 +119,11 @@ const MembersCard = ({ member, setToggle, toggle}) => {
 
     return (
         <>
+
             <Button onClick={handleClickOpen} sx={{ backgroundColor: "#4caf50", boxShadow: 'none' }} autoFocus variant='contained' color="error" startIcon={<EditIcon />}>
-                                    Edit {member.boardMemberName}
+                Edit {member.boardMemberName}
             </Button>
+
             <Snackbar open={open1} autoHideDuration={5000} onClose={handleClose1} anchorOrigin={{
                 vertical: "top",
                 horizontal: "center"
@@ -157,6 +154,7 @@ const MembersCard = ({ member, setToggle, toggle}) => {
                     initialValues={{
                         boardMemberName: member.boardMemberName,
                         designation: member.designation,
+                        year: member.year,
                         photo: null,
                         description: member.description ? member.description : ''
                     }}
@@ -177,46 +175,46 @@ const MembersCard = ({ member, setToggle, toggle}) => {
                             ),
                     })}
                     onSubmit={(values, { setSubmitting }) => {
-                        console.log('values', values)
+                        console.log('values', values.boardMemberName)
 
-                        // console.log('values.date', values.date)
-                        // console.log('values.photo', values.photo)
                         let formData = new FormData();
                         if (values.photo) {
                             formData.append('file', values.photo)
                             formData.append('fileName', values.photo && values.photo.name)
                         }
-                        formData.append('boarMemberName', values.boardMemberName)
+                        formData.append('boardMemberName', values.boardMemberName)
                         formData.append('designation', values.designation)
+                        formData.append('year', values.year)
                         formData.append('description', values.description)
 
-                        if(values.eventStatus == "Cancel") {
-                            const data = {
-                                'boardMemberName': values.boardMemberName,
-                                'designaion': values.designation,
-                                'description': values.description
-                            }
-                            // axios.post("http://localhost:5000/boardMembers/removedMembers", data).then((res) => {
-                            //     console.log('res', res.data)
-                            // }).catch((err) => {
-                            //     console.log(err, "errr")
-                            // })
+                        // if (values.eventStatus == "Cancel") {
+                        //     const data = {
+                        //         'boardMemberName': values.boardMemberName,
+                        //         'designaion': values.designation,
+                        //         'year': values.year,
+                        //         'description': values.description
+                        //     }
+                        //     axios.post("http://localhost:5000/boardMembers/removedMembers", data).then((res) => {
+                        //         console.log('res', res.data)
+                        //     }).catch((err) => {
+                        //         console.log(err, "errr")
+                        //     })
 
-                            axios.delete(`http://localhost:5000/boardMembers/delete/${member._id}`).then((res) => {
-                                handleClick2()
+                        //     axios.delete(`http://localhost:5000/boardMembers/delete/${member._id}`).then((res) => {
+                        //         handleClick2()
+                        //     }).catch((err) => {
+                        //         console.log(err, "errr")
+                        //     })
+                        // }
+                        // else {
+                            axios.put(`http://localhost:5000/boardMembers/update/${member._id}`, formData).then((res) => {
+                                handleClick()
+                                setToggle(!toggle)
+                                handleClose()
                             }).catch((err) => {
                                 console.log(err, "errr")
                             })
-                        }
-                        else{
-                        axios.put(`http://localhost:5000/boardMembers/update/${member._id}`, formData).then((res) => {
-                            handleClick()
-                            setToggle(!toggle)
-                            handleClose()
-                        }).catch((err) => {
-                            console.log(err, "errr")
-                        })
-                    }
+                        
                     }}
                 >
                     {props => (
@@ -229,51 +227,6 @@ const MembersCard = ({ member, setToggle, toggle}) => {
                                 <ErrorMessage name="boardMemberName">
                                     {msg => <div style={{ color: 'red' }} className="film-details-input-validation">{msg}</div>}
                                 </ErrorMessage>
-                                {/* <Stack direction="row" spacing={8} alignItems='center' mt={4}>
-                                    <FormLabel sx={{ color: "black", minWidth: '105px' }}>Event Name* :</FormLabel>
-                                    <Select
-                                        name='eventStatus'
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        style={{ width: 258 }}
-                                        onChange={props.handleChange}
-                                        value={props.values.eventStatus}
-                                    >
-                                        <MenuItem value={"Pending"}>Pending</MenuItem>
-                                        <MenuItem value={"Publish"}>Publish</MenuItem>
-                                        <MenuItem value={"Cancel"}>Cancel</MenuItem>
-                                    </Select>
-                                </Stack> */}
-                                {/* <ErrorMessage name="boardMemberName">
-                                    {msg => <div style={{ color: 'red' }} className="film-details-input-validation">{msg}</div>}
-                                </ErrorMessage> */}
-                                {/* <Stack direction="row" spacing={8} alignItems='center' mt={4}>
-                                    <FormLabel sx={{ color: "black", minWidth: '105px' }}>Date* :</FormLabel>
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <DesktopDatePicker
-                                            inputFormat="MM/DD/YYYY"
-                                            value={props.values.date}
-                                            onChange={value => props.setFieldValue("date", value)}
-                                            renderInput={(params) => <TextField {...params} />}
-                                        />
-                                    </LocalizationProvider>
-                                </Stack> */}
-                                {/* <ErrorMessage name="date">
-                                    {msg => <div style={{ color: 'red' }} className="film-details-input-validation">{msg}</div>}
-                                </ErrorMessage>
-                                <Stack direction="row" spacing={8} alignItems='center' mt={4}>
-                                    <FormLabel sx={{ color: "black", minWidth: '105px' }}>Time* :</FormLabel>
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <TimePicker
-                                            value={props.values.time}
-                                            onChange={value => props.setFieldValue("time", value)}
-                                            renderInput={(params) => <TextField {...params} />}
-                                        />
-                                    </LocalizationProvider>
-                                </Stack>
-                                <ErrorMessage name="time">
-                                    {msg => <div style={{ color: 'red' }} className="film-details-input-validation">{msg}</div>}
-                                </ErrorMessage> */}
                                 <Stack direction="row" spacing={7} alignItems='center' mt={4}>
                                     <FormLabel sx={{ color: "black", minWidth: '105px' }}>Upload Photo* :</FormLabel>
                                     <UploadPhoto name="photo" avatar={member.avatar} />
@@ -311,10 +264,10 @@ const MembersCard = ({ member, setToggle, toggle}) => {
                                                 :
                                                 `Save`
                                             }
-                                            
+
                                         </Button>
                                     }
-                                    
+
 
                                 </div>
                             </div>
