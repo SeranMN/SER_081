@@ -1,14 +1,27 @@
 const User = require('../modal/login');
 const jwt = require('jsonwebtoken')
-
+const bcrypt = require('bcrypt');
 //Add project
 
 const addUser = async (req, res) => {
+     
+    let saltRounds = 10;
     if (req.body) {
-        const user = new User(req.body)
-        await user.save()
+     bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
+         password = hash
+         const user = new User(
+            {
+            email: req.body.email,
+            password: password,
+            role: req.body.role
+            }
+        )
+        
+         user.save()
             .then((data) => { res.status(200).send({ data: data }) })
             .catch((err) => { res.status(500).send(err) });
+});
+        
     }
 };
 
@@ -38,8 +51,9 @@ const findUserByEmail = async (req, res) => {
     await User.findOne({email:req.params.id})
         .then((data) => {
             if (data) {
-                console.log(req)
-                if (req.body.password == data.password) {
+                const match =  bcrypt.compare(req.password, data.password);
+                
+                if (match) {
                     
                     const token = jwt.sign(data.email, "secret")
                     res.header('auth-token', token).send({

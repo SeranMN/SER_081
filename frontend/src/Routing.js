@@ -10,7 +10,7 @@ import Projects from './Components/projects/projects';
 import ProjectDes from './Components/projects/ProjectDes';
 import Home from './Components/Home';
 import Registration from './Components/registration/Registration';
-import Login from './Components/Login/Login';
+import Login from './Components/Login';
 import Addblog from "./Components/Blog/Addblog";
 import Viewblogs from "./Components/Blog/Viewblogs";
 import Fullviewblog from "./Components/Blog/Fullviewblog";
