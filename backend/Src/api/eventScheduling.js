@@ -86,6 +86,21 @@ router.get("/viewevents", async (req, res) => {
 
 });
 
+router.get("/viewevent/:id", async (req, res) => {
+  try {
+    await EventSchedulingScheme.findById(req.params.id)
+      .then((data) => {
+        res.status(200).send(data);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
+  } catch (err) {
+    console.log(err);
+  }
+
+});
+
 router.put("/update/:id", upload.single("file"), async (req, res) => {
   let fileName = req.body.fileName
   let folder = "Events"

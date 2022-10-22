@@ -16,12 +16,12 @@ const ViewBoardMembers = () => {
     const [members, setMembers] = useState([])
     const [toggle, setToggle] = useState(false)
     const [searchTerm, setSearchTerm] = useState("");
-    // const year = useSelector(state => state.filterEvents.year)
+    const year = useSelector(state => state.filterBoards.year)
     const designation = useSelector(state => state.filterBoards.designation)
 
 
     useEffect(() => {
-        if (!searchTerm) {
+        if (!searchTerm && !year && !designation) {
             function getBoardMembers() {
                 axios.get("http://localhost:5000/boardMembers/viewMembers").then((res) => {
                     console.log(res.data)
@@ -57,15 +57,15 @@ const ViewBoardMembers = () => {
 
     useEffect(() => {
         let query
-        // if (status && year) {
-        //     query = `?eventStatus=${status}&year=${year}`
-        // }
-        // else if (status) {
-        //     query = `?eventStatus=${status}`
-        // }
-        // else if (year) {
-        //     query = `?year=${year}`
-        // }
+        if (year && designation) {
+            query = `?designation=${designation}&year=${year}`
+        }
+        else if (year) {
+            query = `?year=${year}`
+        }
+        else if (designation) {
+            query = `?designation=${designation}`
+        }
         axios.get(`http://localhost:5000/boardMembers/filter${query}`)
             .then((res) => {
                 console.log(res.data, "res.data")
@@ -81,7 +81,7 @@ const ViewBoardMembers = () => {
                 console.log(err);
             });
 
-    }, [])
+    }, [year,designation])
 
     return (
         <>
