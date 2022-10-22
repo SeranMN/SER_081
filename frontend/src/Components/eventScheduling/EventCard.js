@@ -361,8 +361,6 @@ const EventCard = ({ event, toggle, setToggle }) => {
                                             
                                         </Button>
                                     }
-                                    
-
                                 </div>
                             </div>
                         </Form>

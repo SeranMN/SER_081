@@ -11,7 +11,7 @@ const EventContainer = () => {
     return (
         <div>
             <div style={{ width: '100%', textAlign: 'center', backgroundColor: '#9e9e9e', fontSize: '20px', fontWeight: 'bold' }}>
-                Upcomming Events
+                Upcoming Events
             </div>
             <Box
                 sx={{
@@ -35,7 +35,7 @@ const EventContainer = () => {
                 </Box>
                 <Box
                     sx={{
-                        m:5
+                        m: 5
                     }}>
                     <Calendar onChange={onChange} value={value} />
                 </Box>

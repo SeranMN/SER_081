@@ -12,12 +12,13 @@ import moment from 'moment';
 import { useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { Link } from 'react-router-dom';
 
 const UpcommingEvents = () => {
 
     useEffect(() => {
         AOS.init();
-      }, [])
+    }, [])
 
     // const rows = [
     //     createData('Legacy sdf sdf sdf sdfs', 'Oct 24,2022', '11.30 AM'),
@@ -47,15 +48,18 @@ const UpcommingEvents = () => {
                 let arr = res.data;
                 let i;
                 let list = [];
-                let list2 = arr.sort((a,b) => new moment(a.date).format('YYYYMMDD') - new moment(b.date).format('YYYYMMDD'))
-                
+                let list2 = arr.sort((a, b) => new moment(a.date).format('YYYYMMDD') - new moment(b.date).format('YYYYMMDD'))
+
                 for (i = 0; i < list2.length; i++) {
-                    const { eventName, date, time } = list2[i]
+                    const { eventName, date, time, _id } = list2[i]
 
                     if (datetime.diff(moment.utc(list2[i].date)) < 0) {
-                        list.push({ eventName: eventName, 
-                            date: (new Date(date).getMonth() + 1) + '/' + (new Date(date).getDate()) + '/' + (new Date(date).getFullYear()), 
-                            time:  formatTime(new Date(time)) })
+                        list.push({
+                            id: _id,
+                            eventName: eventName,
+                            date: (new Date(date).getMonth() + 1) + '/' + (new Date(date).getDate()) + '/' + (new Date(date).getFullYear()),
+                            time: formatTime(new Date(time))
+                        })
                     }
                 }
                 setRows(list)
@@ -78,7 +82,9 @@ const UpcommingEvents = () => {
                                 <EventIcon />
                             </TableCell>
                             <TableCell style={{ borderBottom: "none" }} >
-                                {row.eventName}
+                                <Link to={`/upcomingEvents/${row.id}`}>
+                                    {row.eventName}
+                                </Link>
                             </TableCell>
                             <TableCell style={{ borderBottom: "none" }}>{row.date}</TableCell>
                             <TableCell style={{ borderBottom: "none" }}>{row.time}</TableCell>
