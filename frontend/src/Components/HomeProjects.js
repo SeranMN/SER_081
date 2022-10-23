@@ -6,7 +6,6 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-
 import axios from "axios";
 import Grid from "@mui/material/Grid";
 import { Box } from "@mui/material";
@@ -24,63 +23,27 @@ const HomeProjects = () => {
   }, []);
   return (
     <Container>
-      <Stack spacing={2}>
         {projects.map((pro) => (
-          <Grid
-            container
-            direction="row"
-            justifyContent="flex-start"
-            alignItems="center"
-            spacing={2}
-          >
-            <Box sx={{ width: 1100, minHeight: 150 }}>
-              <Card>
-                <Grid
-                  container
-                  direction="row"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                  spacing={2}
-                >
-                  <Grid md={4}>
-                    <CardContent
-                      component="img"
-                      src={pro.avatar}
-                      height={"300"}
-                      width={"300"}
-                    />
-                  </Grid>
-                </Grid>
-                <Grid
-                  container
-                  direction="row"
-                  justifyContent="flex-start"
-                  alignItems="center"
-                  
-                >
-                  <Grid md={8}>
-                    <CardContent>
-                      <Typography sx={{ fontSize: 30 }} gutterBottom>
-                        {pro.name}
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button size="small">Learn More</Button>
-                    </CardActions>
-                  </Grid>
-                  <Grid md={8}>
-                    <CardContent>
-                      <Typography sx={{ fontSize: 28}} gutterBottom>
-                        {pro.Description}
-                      </Typography>
-                    </CardContent>
-                  </Grid>
-                </Grid>
-              </Card>
-            </Box>
-          </Grid>
+          <Card sx={{ margin: '4px', backgroundColor: '#9e9e9e' }}>
+            <Grid container spacing={2}>
+              <Grid item xs={3}>
+                <CardMedia
+                  component="img"
+                  src={pro && pro.avatar}
+                  alt="Live from space album cover"
+                />
+              </Grid>
+              <Grid item xs={9} paddingRight={15} >
+                <Typography variant="h4" sx={{ textAlign: 'center', mt: '35px' }} color='black' >
+                  {pro.name}
+                </Typography>
+                <Typography variant="h6" sx={{ textAlign: 'justify', mt: '25px',ml: '20px' }} color='black' paragraph>
+                   ascacakj akhjc basjcka sckajc kaisjc askjc kasj cakjsc ka caksj kasj aksjv aksjv akv saj ashjv asjhv asjhv ahjv asjv sa
+                </Typography>
+              </Grid>
+            </Grid>
+          </Card>
         ))}
-      </Stack>
     </Container>
   );
 };

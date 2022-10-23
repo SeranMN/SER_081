@@ -22,7 +22,7 @@ import MemberRemove from './MemberRemove';
 
 const MemberList = ({ members, toggle, setToggle }) => {
     const [open, setOpen] = React.useState(false);
-
+    // const [id,setId] = useState('')
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -31,58 +31,30 @@ const MemberList = ({ members, toggle, setToggle }) => {
         setOpen(false);
     };
 
-    // const [open1, setOpen1] = useState(false);
+    // const [anchorEl, setAnchorEl] = useState(null);
+    // const open1 = Boolean(anchorEl);
     // const handleClick1 = (event) => {
-    //     setOpen1(true);
+    //     setAnchorEl(event.currentTarget);
     // };
     // const handleClose1 = () => {
-    //     setOpen1(false);
+    //     setAnchorEl(null);
     // };
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open1 = Boolean(anchorEl);
-    const handleClick1 = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose1 = () => {
-        setAnchorEl(null);
-    };
 
     return (
         <Grid container spacing={3}>
             {members.map((member, index) => (
+               
                 <Grid item xs={12} md={8} lg={4}>
 
-                    {/* <MembersCard member={member} setToggle={setToggle} toggle={toggle}/> */}
                     <Card sx={{ maxWidth: 360, mt: 4 }}>
 
                         <CardHeader
                             action={<>
-                                <IconButton
-                                    aria-label="more"
-                                    id="long-button"
-                                    aria-controls={open1 ? 'long-menu' : undefined}
-                                    aria-expanded={open1 ? 'true' : undefined}
-                                    aria-haspopup="true"
-                                    onClick={handleClick1} >
-                                    <MoreVertIcon />
-                                </IconButton>
-                                <Menu
-                                    id="long-menu"
-                                    anchorEl={anchorEl}
-                                    open={open1}
-                                    onClose={handleClose1}
-                                    PaperProps={{
-                                        style: {
-                                            width: '20ch',
-                                        },
-                                    }}
-                                >
-                                    <MemberRemove handleClose1={handleClose1} id={member._id} setToggle={setToggle} toggle={toggle}/>
-
-                                </Menu>
+                                
+                                    <MemberRemove  id={member._id} setToggle={setToggle} toggle={toggle}/>
                             </>
                             }
-
+                            
                             title={member.designation}
                             subheader={<><p>{member.boardMemberName}</p> <>{member.year}</></>}
 

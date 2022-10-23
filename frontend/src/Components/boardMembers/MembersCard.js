@@ -120,8 +120,8 @@ const MembersCard = ({ member, setToggle, toggle }) => {
     return (
         <>
 
-            <Button onClick={handleClickOpen} sx={{ backgroundColor: "#4caf50", boxShadow: 'none' }} autoFocus variant='contained' color="error" startIcon={<EditIcon />}>
-                Edit {member.boardMemberName}
+            <Button onClick={handleClickOpen} sx={{ backgroundColor: "#4caf50", boxShadow: 'none' }} autoFocus variant='contained' startIcon={<EditIcon />}>
+                Edit 
             </Button>
 
             <Snackbar open={open1} autoHideDuration={5000} onClose={handleClose1} anchorOrigin={{
@@ -187,34 +187,14 @@ const MembersCard = ({ member, setToggle, toggle }) => {
                         formData.append('year', values.year)
                         formData.append('description', values.description)
 
-                        // if (values.eventStatus == "Cancel") {
-                        //     const data = {
-                        //         'boardMemberName': values.boardMemberName,
-                        //         'designaion': values.designation,
-                        //         'year': values.year,
-                        //         'description': values.description
-                        //     }
-                        //     axios.post("http://localhost:5000/boardMembers/removedMembers", data).then((res) => {
-                        //         console.log('res', res.data)
-                        //     }).catch((err) => {
-                        //         console.log(err, "errr")
-                        //     })
+                        axios.put(`http://localhost:5000/boardMembers/update/${member._id}`, formData).then((res) => {
+                            handleClick()
+                            setToggle(!toggle)
+                            handleClose()
+                        }).catch((err) => {
+                            console.log(err, "errr")
+                        })
 
-                        //     axios.delete(`http://localhost:5000/boardMembers/delete/${member._id}`).then((res) => {
-                        //         handleClick2()
-                        //     }).catch((err) => {
-                        //         console.log(err, "errr")
-                        //     })
-                        // }
-                        // else {
-                            axios.put(`http://localhost:5000/boardMembers/update/${member._id}`, formData).then((res) => {
-                                handleClick()
-                                setToggle(!toggle)
-                                handleClose()
-                            }).catch((err) => {
-                                console.log(err, "errr")
-                            })
-                        
                     }}
                 >
                     {props => (
@@ -231,7 +211,6 @@ const MembersCard = ({ member, setToggle, toggle }) => {
                                     <FormLabel sx={{ color: "black", minWidth: '105px' }}>Upload Photo* :</FormLabel>
                                     <UploadPhoto name="photo" avatar={member.avatar} />
 
-                                    {/* <input id="file" name="file" type="file" onChange={(e) => props.setFieldValue("photo", e.currentTarget.files[0])} /> */}
                                 </Stack>
                                 <ErrorMessage name="photo">
                                     {msg => <div style={{ color: 'red' }} className="film-details-input-validation">{msg}</div>}
@@ -258,7 +237,7 @@ const MembersCard = ({ member, setToggle, toggle }) => {
                                         Close
                                     </Button>
                                     {props.dirty &&
-                                        <Button autoFocus onClick={props.submitForm} variant='contained' >
+                                        <Button onClick={props.submitForm} variant='contained' >
                                             {props.values.eventStatus == "Cancel" ?
                                                 `Cancel`
                                                 :

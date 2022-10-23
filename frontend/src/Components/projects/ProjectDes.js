@@ -67,13 +67,14 @@ const ProjectDes = () => {
     axios
       .delete(`http://localhost:5000/project/delete/${id}`)
       .then(() => {
-        setTimeout(() => {
+       
           setMsg("Massage Deleted Sucessfully");
         SetSeverity("success");
           setOpenSnack(true);
+          
           dispatch(setView('Projects'))
         
-        },30)
+        
         
 
       })
@@ -180,7 +181,7 @@ const ProjectDes = () => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
+          {"Delete project"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">

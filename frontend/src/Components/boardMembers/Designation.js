@@ -28,9 +28,11 @@ const Designation = () => {
                     label="Event Status"
                     onChange={handleChange}
                 >
-                    <MenuItem value={'secretary'}>Secreatary</MenuItem>
+                    <MenuItem value={''}>None</MenuItem>
+                    <MenuItem value={'Secretary'}>Secretary</MenuItem>
                     <MenuItem value={'Treasurer'}>Treasurer</MenuItem>
                     <MenuItem value={'President'}>President</MenuItem>
+                    <MenuItem value={'Member'}>Member</MenuItem>
                 </Select>
             </FormControl>
         </Box>

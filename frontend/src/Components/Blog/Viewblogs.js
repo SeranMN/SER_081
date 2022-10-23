@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import React,{useState, useEffect} from 'react'
 import "../Bstyles/listofblogs.css"
 import {Button} from '@mui/material'
- 
+import TextField from "@mui/material/TextField";;
 function Viewblogs() {
 
-
+    const [SValue,setSValue] = useState('');
     const [listofblogs,setListoblogs] = useState([]);
     const navigate = useNavigate()
     useEffect(()=>{
@@ -30,11 +30,18 @@ function Viewblogs() {
   return (
     <div className='listofblogs'>
         <h1>List Of Blogs</h1>
+        <TextField id="outlined-basic" label="Search" variant="outlined" style={{ width: 400 }} 
+        value = {SValue}
+        onChange={(e) => {
+          setSValue (e.target.value.toLowerCase())
+          
+          }} />
+
         <Button style={{maxWidth:110, maxHeight:45, marginLeft:900, marginTop:0, backgroundColor:"#32cd32"}} variant="contained" 
              href="http://localhost:3000/addblog">
               Add Blog
             </Button>
-        {listofblogs.map((value)=>{
+        {listofblogs.filter(listofblog=>listofblog.title.toLowerCase().includes(SValue)).map((value)=>{
             return(
                 <div className='blogContainer'>
               <div key={value.id} className="blog">

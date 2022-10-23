@@ -109,7 +109,7 @@ const AddEvents = ({ toggle, setToggle }) => {
             }}>
 
                 <Alert onClose={handleClose1} severity="success" sx={{ width: '100%' }}>
-                    The Event has benn sucessfully added
+                    The Event has been sucessfully added
                 </Alert>
             </Snackbar>
             <Button variant="contained" onClick={handleClickOpen} size="medium" startIcon={<EventIcon />}>

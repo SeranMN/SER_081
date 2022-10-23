@@ -10,6 +10,7 @@ import axios from 'axios';
 import MemberList from './MemberList';
 import MemberSearchBar from './MemberSearchBar';
 import { useSelector } from 'react-redux';
+import MemberYearFilter from './MemberYearFilter';
 
 const ViewBoardMembers = () => {
 
@@ -33,7 +34,7 @@ const ViewBoardMembers = () => {
             }
             getBoardMembers()
         }
-    }, [toggle, searchTerm])
+    }, [toggle, searchTerm,year,designation])
 
     const findMembers = (boardMemberName) => {
         if (boardMemberName) {
@@ -94,7 +95,7 @@ const ViewBoardMembers = () => {
                         <Designation />
                     </Grid>
                     <Grid item xs={12} md={8} lg={2}>
-                        <FilterYear />
+                        < MemberYearFilter/>
                     </Grid>
                     <Grid item xs={12} md={8} lg={2}>
                         <MemberGenerateReport />

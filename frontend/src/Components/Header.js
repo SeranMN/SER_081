@@ -126,30 +126,30 @@ const Header = () => {
 
                         {/* desktop */}
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                                <Button
-                                    onClick={() => navigate('/homeProjects')}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
-                                >
-                                    Our Projects
-                                </Button>
-                                <Button
-                                    onClick={() => navigate('/homeBlogs')}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
-                                >
-                                    Blogs
-                                </Button>
-                                <Button
-                                    onClick={() => navigate('/homeLeaders')}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
-                                >
-                                    Our Leaders
-                                </Button>
-                                <Button
-                                    onClick={() => navigate('/homeAboutUs')}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
-                                >
-                                    About us
-                                </Button>
+                            <Button
+                                onClick={() => navigate('/')}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                Home
+                            </Button>
+                            <Button
+                                onClick={() => navigate('/homeProjects')}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                Our Projects
+                            </Button>
+                            <Button
+                                onClick={() => navigate('/viewblog')}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                Blogs
+                            </Button>
+                            <Button
+                                onClick={() => navigate('/homeLeaders')}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                Our Leaders
+                            </Button>
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>
@@ -160,7 +160,7 @@ const Header = () => {
                     </Toolbar>
                 </Container>
             </AppBar>
-            <Outlet/>
+            <Outlet />
         </>
 
     )
