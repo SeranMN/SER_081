@@ -4,19 +4,8 @@ const Project = require('../modal/projects');
 //Add project
 
 const addProjects = async (req, res) => {
-if (req.file) {
-      result = await cloudinary.uploader.upload(req.file.path, { resource_type: "auto", public_id: fileName, folder: folder });
-    }
-
     if (req.body) {
-        const project = new Project(
- {          name: req.body.name,
-            Date: req.body.Date ,
-            Description:req.body.Description ,
-            avatar:result?.secure_url || null,
-            cloudinary_id: result?.public_id || null
-        }
-        )
+        const project = new Project(req.body)
         await project.save()
             .then((data) => { res.status(200).send({ data: data }) })
             .catch((err) => { res.status(500).send(err) });
