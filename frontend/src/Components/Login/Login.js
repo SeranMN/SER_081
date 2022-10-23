@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button, Card, CardContent, Typography } from "@mui/material";
-import Alert from "../toast/Alert";
+
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 const Login = () => {
@@ -17,7 +17,7 @@ const Login = () => {
       .then((data) => {
         console.log(data);
         if (data.data == 'Invalid') {
-          
+          alert('Wrong')
         } else {
           sessionStorage.setItem('role', data.data.role)
           sessionStorage.setItem('mail',data.data.email)

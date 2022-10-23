@@ -153,7 +153,7 @@ const ProjectDes = () => {
           <Card>
              <CardContent
                   component="img"
-                  src="/clublogo.png"
+                  src={project.avatar}
                   height={"150"} 
                   width={"150"}
                 />
@@ -223,7 +223,7 @@ const ProjectDes = () => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Add Projects
+            Edit project
           </Typography>
           <Stack spacing={2}>
             <TextField
@@ -264,12 +264,12 @@ const ProjectDes = () => {
             />
             <FormLabel sx={{ color: "black", minWidth: '105px' }}>Upload Photo* :</FormLabel>
             <input id="file" name="file" type="file" onChange={(e) => setPhoto("photo", e.currentTarget.files[0])} />
-            {projectName === "" ||
-              date === "" ||
-              description === "" ||
-              projectName === null ||
-              date === null ||
-              description === null ? (
+            {projectName == "" ||
+              date == "" ||
+              description == "" ||
+              projectName == null ||
+              date == null ||
+              description == null ? (
               <Button variant="contained" color="success" disabled="true">
                 Submit
               </Button>
