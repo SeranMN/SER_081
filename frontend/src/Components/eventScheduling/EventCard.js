@@ -352,7 +352,7 @@ const EventCard = ({ event, toggle, setToggle }) => {
                                         Close
                                     </Button>
                                     {props.dirty &&
-                                        <Button autoFocus onClick={props.submitForm} variant='contained' >
+                                        <Button onClick={props.submitForm} variant='contained' >
                                             {props.values.eventStatus == "Cancel" ?
                                                 `Cancel the Event`
                                                 :
