@@ -54,14 +54,15 @@ const Projects = () => {
 console.log(photo)
 
   const onSubmit = async () => {
-    const project = {
-      name: projectName,
-      Date: date.$D + "/" + date.$M + "/" + date.$y,
-      Description: description,
-      photo:photo
-    };
+    console.log("photo", photo)
+    let formData = new FormData();
+    formData.append('file', photo)
+    formData.append('name', projectName)
+    formData.append('Date', date.$D + "/" + date.$M + "/" + date.$y)
+    formData.append('Description', description)
+    formData.append('fileName', photo.name)
     axios
-      .post("http://localhost:5000/project/add", project)
+      .post("http://localhost:5000/project/add", formData)
       .then(() => {
         setMsg("Successfully Added Projects");
         SetSeverity("success");
@@ -176,7 +177,7 @@ console.log(photo)
               <Card>
                 <CardContent
                   component="img"
-                  src="/clublogo.png"
+                  src= {pro.avatar}
                   height={"150"} 
                   width={"150"}
                 />
@@ -249,13 +250,13 @@ console.log(photo)
               }}
             />
             <FormLabel sx={{ color: "black", minWidth: '105px' }}>Upload Photo* :</FormLabel>
-            <input id="file" name="file" type="file" onChange={(e) => setPhoto("photo", e.currentTarget.files[0])} />
-            {projectName === "" ||
-              date === "" ||
-              description === "" ||
-              projectName === null ||
-              date === null ||
-              description === null ? (
+            <input id="file" name="file" type="file" onChange={(e) => setPhoto(e.target.files[0])} />
+            {projectName == "" ||
+              date == "" ||
+              description == "" ||
+              projectName == null ||
+              date == null ||
+              description == null ? (
               <Button variant="contained" color="success" disabled="true">
                 Submit
               </Button>
