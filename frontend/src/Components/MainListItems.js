@@ -10,7 +10,7 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import { useDispatch } from 'react-redux';
 import { setView } from '../store/reducers/containerReducer';
 
-const MainListItems = ({setHeader}) => {
+const MainListItems = ({ setHeader }) => {
     const dispatch = useDispatch()
 
     return (
@@ -44,7 +44,10 @@ const MainListItems = ({setHeader}) => {
                 </ListItemIcon>
                 <ListItemText primary="Board Members" />
             </ListItemButton>
-            <ListItemButton>
+            <ListItemButton onClick={() => {
+                setHeader("Blogs")
+                dispatch(setView('Updateblog'))
+            }}>
                 <ListItemIcon>
                     <LibraryBooksIcon />
                 </ListItemIcon>
@@ -59,13 +62,7 @@ const MainListItems = ({setHeader}) => {
                 </ListItemIcon>
                 <ListItemText primary="Events" />
             </ListItemButton>
-            <ListItemButton>
-                <ListItemIcon>
-                    <LibraryBooksIcon />
-                </ListItemIcon>
-                <ListItemText primary="Membership" />
-            </ListItemButton>
-            
+
         </>
     )
 }

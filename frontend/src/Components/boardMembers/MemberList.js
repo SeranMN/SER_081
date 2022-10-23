@@ -31,13 +31,6 @@ const MemberList = ({ members, toggle, setToggle }) => {
         setOpen(false);
     };
 
-    // const [open1, setOpen1] = useState(false);
-    // const handleClick1 = (event) => {
-    //     setOpen1(true);
-    // };
-    // const handleClose1 = () => {
-    //     setOpen1(false);
-    // };
     const [anchorEl, setAnchorEl] = useState(null);
     const open1 = Boolean(anchorEl);
     const handleClick1 = (event) => {
@@ -52,7 +45,6 @@ const MemberList = ({ members, toggle, setToggle }) => {
             {members.map((member, index) => (
                 <Grid item xs={12} md={8} lg={4}>
 
-                    {/* <MembersCard member={member} setToggle={setToggle} toggle={toggle}/> */}
                     <Card sx={{ maxWidth: 360, mt: 4 }}>
 
                         <CardHeader

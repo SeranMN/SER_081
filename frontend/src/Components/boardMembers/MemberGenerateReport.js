@@ -1,14 +1,14 @@
 import React from 'react'
 import Button from '@mui/material/Button';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-// import { useDispatch } from 'react-redux';
-// import { setView } from '../../store/reducers/containerReducer';
+import { useDispatch } from 'react-redux';
+import { setView } from '../../store/reducers/containerReducer'; 
 
 const MemberGenerateReport = () => {
 
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
     const handleSubmit = () => {
-        // dispatch(setView('BoardMembersReport'))
+        dispatch(setView('BoardMembersReport'))
     }
 
     return (

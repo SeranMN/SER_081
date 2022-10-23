@@ -5,15 +5,15 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useDispatch } from 'react-redux';
-import { setYear } from '../../store/reducers/filterEventReducer';
+import { setYear } from '../../store/reducers/filterBoardMembersReducer';
 import { useSelector } from 'react-redux';
 
 const MemberYearFilter = () => {
-    const year = useSelector(state => state.filterBoardMember.year)
+    const year = useSelector(state => state.filterBoards.year)
     const dispatch = useDispatch()
 
-    const handleChange = (member) => {
-        dispatch(setYear(member.target.value))
+    const handleChange = (event) => {
+        dispatch(setYear(event.target.value))
     };
 
     return (

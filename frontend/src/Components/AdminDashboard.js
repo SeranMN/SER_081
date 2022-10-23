@@ -27,9 +27,10 @@ import ProjectReport from "./projects/ProjectReport";
 import ViewBoardMembers from './boardMembers/ViewBoardMembers';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useNavigate } from "react-router";
+import BoardMembersReport from "./boardMembers/BoardMembersReport";
+import Updateblog from "./Blog/Updateblog";
 
 function Copyright(props) {
-
 
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -110,7 +111,9 @@ function DashboardContent() {
         Projects: Projects,
         ProjectDes: ProjectDes,
         ProjectReport:ProjectReport,
-        ViewBoardMembers:ViewBoardMembers
+        ViewBoardMembers:ViewBoardMembers,
+        BoardMembersReport:BoardMembersReport,
+        Updateblog:Updateblog
     }
 
     const TargetComponent = components[view];

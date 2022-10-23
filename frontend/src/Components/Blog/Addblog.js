@@ -40,7 +40,7 @@ function Addblog() {
     <div>
         <Card style={{maxWidth:850, margin:"0 auto", marginTop:20, marginBottom:20, padding:"20px 0px", borderStyle:"outset"}}>
             <CardContent>
-                <Typography style={{marginLeft:360, marginBottom:20, fontWeight:'bold', fontSize:20}}>Add New Blog</Typography>
+                <Typography style={{ marginBottom:20, fontWeight:'bold', fontSize:20}}>Add New Blog</Typography>
 
                 <form>
                  <Grid container spacing={1}>
@@ -68,7 +68,7 @@ function Addblog() {
                     }}/>
                      </Grid>
                      <Grid xs={12} item>
-                     <Button type="submit" variant='contained' sx={{mt: 3}} color='primary' onClick={sendData} style={{marginLeft:365}}>Publish</Button>
+                     <Button type="submit" variant='contained' sx={{mt: 3}} color='primary' onClick={sendData}>Publish</Button>
                      </Grid>
 
                  </Grid>

@@ -32,8 +32,6 @@ const Routing = () => {
                 <Route path='/events' exact element={<EventScheduling />} />
                 <Route path='/projects' exact element={<Projects />} />
                 <Route path='/projectsdes/:id' element={<ProjectDes />} />
-                <Route path='/addblog' exact element={<Addblog />} />
-                <Route path='/viewblog' exact element={<Viewblogs />} />
                 <Route path='/fullviewblog/:id' exact element={<Fullviewblog />} />
                 <Route path='/updateblog' exact element={<Updateblog />} />
                 <Route element={<Header />}>
@@ -43,6 +41,9 @@ const Routing = () => {
                     <Route path='/homeBlogs' exact element={<HomeBlogs />} />
                     <Route path='/homeAboutUs' exact element={<HomeAboutUs />} />
                     <Route path='/homeProjects' exact element={<HomeProjects />} />
+                    <Route path='/viewblog' exact element={<Viewblogs />} />
+                    <Route path='/addblog' exact element={<Addblog />} />
+
                 </Route>
             </Routes>
         </BrowserRouter>
