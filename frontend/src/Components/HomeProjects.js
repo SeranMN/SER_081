@@ -22,29 +22,32 @@ const HomeProjects = () => {
       .catch((err) => console.log(err));
   }, []);
   return (
-    <Container>
+    <div style={{ backgroundColor: '#373e98',padding:'2px'}}>
+    <Container >
         {projects.map((pro) => (
-          <Card sx={{ margin: '4px', backgroundColor: '#9e9e9e' }}>
+          <Card sx={{ margin: '4px', height: '400px', backgroundColor:'#0e0569' }}>
             <Grid container spacing={2}>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <CardMedia
                   component="img"
                   src={pro && pro.avatar}
                   alt="Live from space album cover"
+                  sx={{ width:'600px',height:'500px'}}
                 />
               </Grid>
-              <Grid item xs={9} paddingRight={15} >
-                <Typography variant="h4" sx={{ textAlign: 'center', mt: '35px' }} color='black' >
+              <Grid item xs={8} paddingRight={2} >
+                <Typography variant="h2" sx={{ textAlign: 'center', mt: '35px',textDecoration:'bold' }} color='white' >
                   {pro.name}
                 </Typography>
-                <Typography variant="h6" sx={{ textAlign: 'justify', mt: '25px',ml: '20px' }} color='black' paragraph>
-                   ascacakj akhjc basjcka sckajc kaisjc askjc kasj cakjsc ka caksj kasj aksjv aksjv akv saj ashjv asjhv asjhv ahjv asjv sa
+                <Typography variant="h6" sx={{ textAlign: 'justify', mt: '25px',ml: '20px' }} color='white' paragraph>
+                   {pro.Description}
                 </Typography>
               </Grid>
             </Grid>
           </Card>
         ))}
-    </Container>
+      </Container>
+    </div>
   );
 };
 

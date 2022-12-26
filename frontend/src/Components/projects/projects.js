@@ -178,8 +178,8 @@ console.log(photo)
                 <CardContent
                   component="img"
                   src= {pro.avatar}
-                  height={"150"} 
-                  width={"150"}
+                  height={"500"} 
+                  width={"500"}
                 />
                   <CardContent>
                     <Typography sx={{ fontSize: 18 }} gutterBottom>
